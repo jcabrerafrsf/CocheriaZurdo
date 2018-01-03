@@ -645,6 +645,9 @@
               <Font name="SansSerif" size="14" style="1"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jfechaaltaMousePressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jfechacobertura">
           <Properties>

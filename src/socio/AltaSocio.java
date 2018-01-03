@@ -418,6 +418,11 @@ public class AltaSocio extends javax.swing.JFrame {
 
         jfechaalta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
         jfechaalta.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jfechaalta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jfechaaltaMousePressed(evt);
+            }
+        });
 
         jfechacobertura.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
         jfechacobertura.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -498,10 +503,10 @@ public class AltaSocio extends javax.swing.JFrame {
             }
         });
         jcodigotarifa.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
                 jcodigotarifaCaretPositionChanged(evt);
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
 
@@ -1008,6 +1013,10 @@ public class AltaSocio extends javax.swing.JFrame {
     private void jcodigotarifaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcodigotarifaItemStateChanged
         setPrecio();
     }//GEN-LAST:event_jcodigotarifaItemStateChanged
+
+    private void jfechaaltaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jfechaaltaMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jfechaaltaMousePressed
     
     /**
      * @param args the command line arguments
