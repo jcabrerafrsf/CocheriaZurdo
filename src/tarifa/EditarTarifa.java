@@ -47,15 +47,21 @@ public class EditarTarifa extends javax.swing.JFrame {
         Statement st;
         try {
             st = cn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT nombre, precio FROM bdcocheriazurdo.tarifas WHERE nro_tarifa="+nroTarifa);
-            String datos[] = new String [2];        
+            ResultSet rs = st.executeQuery("SELECT nombre, precio, estado FROM bdcocheriazurdo.tarifas WHERE nro_tarifa="+nroTarifa);
+            String datos[] = new String [3];        
                 while(rs.next()){
                         datos[0] = rs.getString("nombre");
                         datos[1] = rs.getString("precio");
+                        datos[2] = rs.getString("estado");
                 }
                 rs.close();
                 jnombre.setText(datos[0]);
                 jprecio.setText(datos[1]);
+                if(datos[2].equals("ALTA")){
+                    jestado.setSelectedIndex(0);
+                }else{
+                    jestado.setSelectedIndex(1);
+                }
         } catch (SQLException ex) {
             Logger.getLogger(EliminarTarifa.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -88,6 +94,8 @@ public class EditarTarifa extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jLabel18 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
+        jLabel23 = new javax.swing.JLabel();
+        jestado = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -194,6 +202,14 @@ public class EditarTarifa extends javax.swing.JFrame {
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("Sobrescriba los datos para editar");
 
+        jLabel23.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel23.setText("ESTADO:");
+
+        jestado.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jestado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ALTA", "BAJA" }));
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -234,12 +250,14 @@ public class EditarTarifa extends javax.swing.JFrame {
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel20)
                                     .addComponent(jLabel21)
-                                    .addComponent(jLabel22))
+                                    .addComponent(jLabel22)
+                                    .addComponent(jLabel23))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jnrotarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 21, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -272,7 +290,7 @@ public class EditarTarifa extends javax.swing.JFrame {
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel20)
                     .addComponent(jnrotarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -284,7 +302,11 @@ public class EditarTarifa extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel22))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(jestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -334,7 +356,7 @@ public class EditarTarifa extends javax.swing.JFrame {
         if(seleccion==0){
 
             try{
-                PreparedStatement pst = cn.prepareStatement("UPDATE bdcocheriazurdo.tarifas SET nombre='"+jnombre.getText()+"', precio="+jprecio.getText()+" WHERE nro_tarifa=?;");                                           
+                PreparedStatement pst = cn.prepareStatement("UPDATE bdcocheriazurdo.tarifas SET nombre='"+jnombre.getText()+"', precio="+jprecio.getText()+", estado='"+jestado.getSelectedItem().toString()+"' WHERE nro_tarifa=?;");                                           
                 Integer nTarifa = Integer.valueOf(jnrotarifa.getText());
                 pst.setInt(1, nTarifa);
                 pst.executeUpdate();
@@ -459,11 +481,13 @@ public class EditarTarifa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JComboBox<String> jestado;
     private javax.swing.JTextField jnombre;
     private javax.swing.JTextField jnrotarifa;
     private javax.swing.JTextField jprecio;

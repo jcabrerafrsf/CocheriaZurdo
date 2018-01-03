@@ -33,6 +33,7 @@ public class AltaAdherente extends javax.swing.JFrame {
     int nro_del_socio;
     int cantadh;
     int cantsc;
+    Double precioMayEd;
     
     public AltaAdherente() {
         initComponents();
@@ -484,10 +485,7 @@ public class AltaAdherente extends javax.swing.JFrame {
     }//GEN-LAST:event_jfechacoberturaActionPerformed
 
     private void CONTINUARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CONTINUARActionPerformed
-               
-        //decremento porque acabo de cargar uno
-        System.out.println(cantidadadh);   
-        
+       
         cantidadadh--;
                    
         try{
@@ -509,20 +507,52 @@ public class AltaAdherente extends javax.swing.JFrame {
             }catch (SQLException ex) {
             Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
             }     
-   
-        pst.setInt(1,cantadh+1);
-        pst.setInt(2, this.nro_del_socio);
-        pst.setString(3, this.japellido.getText().toUpperCase());
-        pst.setString(4, this.jnombre.getText().toUpperCase());
-        pst.setString(5, this.jdni.getText().toUpperCase());
-        pst.setString(6, this.jdireccion.getText().toUpperCase());
-        pst.setString(7, this.jtelefono.getText().toUpperCase());
-        pst.setString(8, getSexo());        
-        pst.setString(9, this.jfechanac.getText());
-        pst.setString(10, this.jfechaalta.getText());
-        pst.setString(11, this.jfechacobertura.getText());
-        pst.setString(12, "ALTA");
-        pst.executeUpdate();
+            
+        
+        //VERIFICO SI ES MAYOR DE EDAD PARA INCREMENTAR TARIFA
+        int edad = Integer.parseInt(jedad.getText());
+        if(edad>=21){
+            JOptionPane.showMessageDialog(null,"Adherente mayor de edad, se incrementará tarifa adicional");
+            try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT precio FROM bdcocheriazurdo.tarifas WHERE nombre='MAYOR EDAD'");
+            rs.last();
+            precioMayEd = rs.getDouble("precio");
+            }catch (SQLException ex) {
+            Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            pst.setInt(1,cantadh+1);
+            pst.setInt(2, this.nro_del_socio);
+            pst.setString(3, this.japellido.getText().toUpperCase());
+            pst.setString(4, this.jnombre.getText().toUpperCase());
+            pst.setString(5, this.jdni.getText().toUpperCase());
+            pst.setString(6, this.jdireccion.getText().toUpperCase());
+            pst.setString(7, this.jtelefono.getText().toUpperCase());
+            pst.setString(8, getSexo());        
+            pst.setString(9, this.jfechanac.getText());
+            pst.setString(10, this.jfechaalta.getText());
+            pst.setString(11, this.jfechacobertura.getText());
+            pst.setDouble(12, this.precioMayEd);
+            pst.setString(13, "ALTA");
+            pst.executeUpdate();
+            
+        }else{
+            pst.setInt(1,cantadh+1);
+            pst.setInt(2, this.nro_del_socio);
+            pst.setString(3, this.japellido.getText().toUpperCase());
+            pst.setString(4, this.jnombre.getText().toUpperCase());
+            pst.setString(5, this.jdni.getText().toUpperCase());
+            pst.setString(6, this.jdireccion.getText().toUpperCase());
+            pst.setString(7, this.jtelefono.getText().toUpperCase());
+            pst.setString(8, getSexo());        
+            pst.setString(9, this.jfechanac.getText());
+            pst.setString(10, this.jfechaalta.getText());
+            pst.setString(11, this.jfechacobertura.getText());
+            pst.setDouble(12, 0.0);
+            pst.setString(13, "ALTA");
+            pst.executeUpdate();
+        }
 
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,"Error en la conexion o DNI duplicado - "+e.getMessage());
