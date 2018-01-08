@@ -4,9 +4,12 @@ package socio;
 import adherente.AltaAdherente;
 import cocheriazurdo.Fecha_Hora;
 import cocheriazurdo.conectar;
+import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.sql.*;
 import java.text.*;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import java.util.Date;
 import java.util.logging.*;
@@ -15,11 +18,12 @@ import tarifa.ConsTarParaAltaSocio;
 
 public class AltaSocio extends javax.swing.JFrame {
 
+    private Point clic;
     
     public AltaSocio() {
         initComponents(); 
         this.setVisible(true);
-        setIconImage(new ImageIcon(getClass().getResource("/src/main/resources/logocz.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage());
         setLocationRelativeTo(null);
         cargarTarifas();
         this.jnumeroadherentes.setText("0");
@@ -273,6 +277,16 @@ public class AltaSocio extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(55, 64, 70));
         jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black), javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white)));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(240, 240, 240));
@@ -494,7 +508,11 @@ public class AltaSocio extends javax.swing.JFrame {
         });
 
         jfechanac.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jfechanac.setText("dd/mm/aaaa");
         jfechanac.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jfechanacFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jfechanacFocusLost(evt);
             }
@@ -718,7 +736,7 @@ public class AltaSocio extends javax.swing.JFrame {
     private void btcargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btcargarActionPerformed
         
         if (!(jnombre.getText().isEmpty() || japellido.getText().isEmpty() || jdni.getText().isEmpty() || jtelefono.getText().isEmpty() ||
-            jdireccion.getText().isEmpty() || jfechanac.getText().isEmpty() || jcodigoobrasocial.getText().isEmpty())){
+            jdireccion.getText().isEmpty() || jfechanac.getText().isEmpty() || jfechanac.getText().equals("dd/mm/aaaa") || jcodigoobrasocial.getText().isEmpty())){
             
             if(jcodigotarifa.getSelectedItem()!="Seleccionar item"){
                 cargaDatos();
@@ -976,51 +994,58 @@ public class AltaSocio extends javax.swing.JFrame {
         setPrecio();
     }//GEN-LAST:event_jcodigotarifaItemStateChanged
 
-    private void jfechanacKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechanacKeyTyped
-        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
-            evt.consume();
+    private void jfechanacFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusGained
+        if (this.jfechanac.getText().equals("dd/mm/aaaa") || this.jfechanac.getBackground().equals(Color.red)){
+            this.jfechanac.setText("");
+            this.jfechanac.setBackground(Color.white);
         }
-    }//GEN-LAST:event_jfechanacKeyTyped
+    }//GEN-LAST:event_jfechanacFocusGained
 
     private void jfechanacFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusLost
-        if(jfechanac.getText().charAt(2)==47 && jfechanac.getText().charAt(5)==47 && jfechanac.getText().length()==10){
-            fechaSistema();
+        if (this.jfechanac.getText().isEmpty()){
+            this.jfechanac.setText("dd/mm/aaaa");
+            this.jfechanac.setBackground(Color.RED);
         }else{
-            String fechanacAux=jfechanac.getText();
-            if(fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47 && fechanacAux.length()==8){
-                jfechanac.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
+            if(jfechanac.getText().length()==10 && jfechanac.getText().charAt(2)==47 && jfechanac.getText().charAt(5)==47){
                 fechaSistema();
             }else{
-                if (fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47 && fechanacAux.length()==9){
-                    jfechanac.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
+                String fechanacAux=jfechanac.getText();
+                if(fechanacAux.length()==8 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                    jfechanac.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
                     fechaSistema();
                 }else{
-                    if(fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47 && fechanacAux.length()==9){
-                        jfechanac.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
+                    if (fechanacAux.length()==9 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                        jfechanac.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
                         fechaSistema();
                     }else{
-                        //PARA AÑOS DE DOS DIGITOS
-                        if(fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47 && fechanacAux.length()==6){
-                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
-                            jfechanac.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
+                        if(fechanacAux.length()==9 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                            jfechanac.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
                             fechaSistema();
                         }else{
-                            if(fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47 && fechanacAux.length()==7){
-                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
-                                jfechanac.setText('0' + fechanacAux.substring(0, 5) + año);
+                            //PARA AÑOS DE DOS DIGITOS
+                            if(fechanacAux.length()==6 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
+                                jfechanac.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
                                 fechaSistema();
                             }else{
-                                if(fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47 && fechanacAux.length()==7){
+                                if(fechanacAux.length()==7 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
                                     String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
-                                    jfechanac.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
+                                    jfechanac.setText('0' + fechanacAux.substring(0, 5) + año);
                                     fechaSistema();
                                 }else{
-                                    if(fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47 && fechanacAux.length()==8){
-                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
-                                        jfechanac.setText(fechanacAux.substring(0, 6) + año);
+                                    if(fechanacAux.length()==7 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                        jfechanac.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
                                         fechaSistema();
                                     }else{
-                                      jfechanac.setText("");
+                                        if(fechanacAux.length()==8 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47){
+                                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
+                                            jfechanac.setText(fechanacAux.substring(0, 6) + año);
+                                            fechaSistema();
+                                        }else{
+                                            jfechanac.setText("");
+                                            jfechanac.setBackground(Color.red);
+                                        }
                                     }
                                 }
                             }
@@ -1030,15 +1055,39 @@ public class AltaSocio extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jfechanacFocusLost
+
+    private void jfechanacKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechanacKeyTyped
+        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jfechanacKeyTyped
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        clic = evt.getPoint();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+            // get location of Window
+            int thisX = this.getLocation().x;
+            int thisY = this.getLocation().y;
+
+            // Determine how much the mouse moved since the initial click
+            int xMoved = (thisX + evt.getX()) - (thisX + clic.x);
+            int yMoved = (thisY + evt.getY()) - (thisY + clic.y);
+
+            // Move window to this position
+            int X = thisX + xMoved;
+            int Y = thisY + yMoved;
+            this.setLocation(X, Y);
+    }//GEN-LAST:event_jPanel1MouseDragged
     
     private String añoDeCuatroDigitos(String añoDeDos){
-        Date now = new Date();
-        if(Integer.parseInt("20"+añoDeDos)>now.getYear()){
+        if(Integer.parseInt("20"+añoDeDos)>Calendar.getInstance().get(Calendar.YEAR)){
             return "19"+añoDeDos;
         }else{
             return "20"+añoDeDos;
         }
-    }
+    } 
     
     /**
      * @param args the command line arguments

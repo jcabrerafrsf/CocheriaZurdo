@@ -7,6 +7,7 @@ package socio;
 
 import cocheriazurdo.Fecha_Hora;
 import cocheriazurdo.conectar;
+import java.awt.Point;
 import socio.OpcionesSocio;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -29,6 +30,7 @@ import javax.swing.JOptionPane;
 public class EditSocio extends javax.swing.JFrame {
 
     int numerosocio=0;
+    private Point clic;
     
     public EditSocio() {
         initComponents();
@@ -386,6 +388,16 @@ public class EditSocio extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(55, 64, 70));
         jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black), javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white)));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/edituser.png"))); // NOI18N
 
@@ -1180,6 +1192,25 @@ public class EditSocio extends javax.swing.JFrame {
             cargaDatos();  
         }
     }//GEN-LAST:event_jnrosocioFocusGained
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+            // get location of Window
+            int thisX = this.getLocation().x;
+            int thisY = this.getLocation().y;
+
+            // Determine how much the mouse moved since the initial click
+            int xMoved = (thisX + evt.getX()) - (thisX + clic.x);
+            int yMoved = (thisY + evt.getY()) - (thisY + clic.y);
+
+            // Move window to this position
+            int X = thisX + xMoved;
+            int Y = thisY + yMoved;
+            this.setLocation(X, Y);
+    }//GEN-LAST:event_jPanel1MouseDragged
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        clic = evt.getPoint();
+    }//GEN-LAST:event_jPanel1MousePressed
 
     /**
      * @param args the command line arguments

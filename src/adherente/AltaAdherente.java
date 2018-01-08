@@ -8,6 +8,8 @@ package adherente;
 import socio.ConsultaSocios;
 import cocheriazurdo.Fecha_Hora;
 import cocheriazurdo.conectar;
+import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import socio.AltaSocioYAdhExito;
 import java.sql.Connection;
@@ -17,6 +19,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +37,7 @@ public class AltaAdherente extends javax.swing.JFrame {
     int cantadh;
     int cantsc;
     Double precioMayEd;
+    private Point clic;
     
     public AltaAdherente() {
         initComponents();
@@ -121,7 +125,6 @@ public class AltaAdherente extends javax.swing.JFrame {
         jnombre = new javax.swing.JTextField();
         jdireccion = new javax.swing.JTextField();
         jsexo = new javax.swing.JComboBox<>();
-        jfechanac = new javax.swing.JFormattedTextField();
         jedad = new javax.swing.JTextField();
         jfechaalta = new javax.swing.JFormattedTextField();
         jfechacobertura = new javax.swing.JFormattedTextField();
@@ -136,6 +139,7 @@ public class AltaAdherente extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         jdni = new javax.swing.JFormattedTextField();
         jtelefono = new javax.swing.JTextField();
+        jfechanac = new javax.swing.JTextField();
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(240, 240, 240));
@@ -146,6 +150,16 @@ public class AltaAdherente extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(55, 64, 70));
         jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black), javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white)));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(240, 240, 240));
@@ -218,17 +232,6 @@ public class AltaAdherente extends javax.swing.JFrame {
 
         jsexo.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jsexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F", "I" }));
-
-        jfechanac.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-        jfechanac.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jfechanac.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jfechanacFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jfechanacFocusLost(evt);
-            }
-        });
 
         jedad.setEditable(false);
         jedad.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -306,6 +309,22 @@ public class AltaAdherente extends javax.swing.JFrame {
             }
         });
 
+        jfechanac.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jfechanac.setText("dd/mm/aaaa");
+        jfechanac.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jfechanacFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jfechanacFocusLost(evt);
+            }
+        });
+        jfechanac.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jfechanacKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -368,9 +387,9 @@ public class AltaAdherente extends javax.swing.JFrame {
                                 .addComponent(jsexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9)
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -424,11 +443,11 @@ public class AltaAdherente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel9)
-                    .addComponent(jtelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -463,10 +482,6 @@ public class AltaAdherente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jfechanacFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusGained
-        
-    }//GEN-LAST:event_jfechanacFocusGained
 
     private void jfechacoberturaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechacoberturaFocusGained
         fechaSistema();
@@ -601,10 +616,6 @@ public class AltaAdherente extends javax.swing.JFrame {
         this.setExtendedState(ICONIFIED);
     }//GEN-LAST:event_jLabel23MouseClicked
 
-    private void jfechanacFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusLost
-       fechaSistema();
-    }//GEN-LAST:event_jfechanacFocusLost
-
     private void jdniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jdniKeyTyped
         
     }//GEN-LAST:event_jdniKeyTyped
@@ -630,7 +641,102 @@ public class AltaAdherente extends javax.swing.JFrame {
         else
         evt.consume();
     }//GEN-LAST:event_jtelefonoKeyTyped
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        clic = evt.getPoint();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+        // get location of Window
+        int thisX = this.getLocation().x;
+        int thisY = this.getLocation().y;
+
+        // Determine how much the mouse moved since the initial click
+        int xMoved = (thisX + evt.getX()) - (thisX + clic.x);
+        int yMoved = (thisY + evt.getY()) - (thisY + clic.y);
+
+        // Move window to this position
+        int X = thisX + xMoved;
+        int Y = thisY + yMoved;
+        this.setLocation(X, Y);
+    }//GEN-LAST:event_jPanel1MouseDragged
+
+    private void jfechanacFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusGained
+        if (this.jfechanac.getText().equals("dd/mm/aaaa") || this.jfechanac.getBackground().equals(Color.red)){
+            this.jfechanac.setText("");
+            this.jfechanac.setBackground(Color.white);
+        }
+    }//GEN-LAST:event_jfechanacFocusGained
+
+    private void jfechanacFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusLost
+        if (this.jfechanac.getText().isEmpty()){
+            this.jfechanac.setText("dd/mm/aaaa");
+            this.jfechanac.setBackground(Color.RED);
+        }else{
+            if(jfechanac.getText().length()==10 && jfechanac.getText().charAt(2)==47 && jfechanac.getText().charAt(5)==47){
+                fechaSistema();
+            }else{
+                String fechanacAux=jfechanac.getText();
+                if(fechanacAux.length()==8 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                    jfechanac.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
+                    fechaSistema();
+                }else{
+                    if (fechanacAux.length()==9 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                        jfechanac.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
+                        fechaSistema();
+                    }else{
+                        if(fechanacAux.length()==9 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                            jfechanac.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
+                            fechaSistema();
+                        }else{
+                            //PARA AÑOS DE DOS DIGITOS
+                            if(fechanacAux.length()==6 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
+                                jfechanac.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
+                                fechaSistema();
+                            }else{
+                                if(fechanacAux.length()==7 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                                    String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                    jfechanac.setText('0' + fechanacAux.substring(0, 5) + año);
+                                    fechaSistema();
+                                }else{
+                                    if(fechanacAux.length()==7 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                        jfechanac.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
+                                        fechaSistema();
+                                    }else{
+                                        if(fechanacAux.length()==8 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47){
+                                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
+                                            jfechanac.setText(fechanacAux.substring(0, 6) + año);
+                                            fechaSistema();
+                                        }else{
+                                            jfechanac.setText("");
+                                            jfechanac.setBackground(Color.red);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jfechanacFocusLost
+
+    private void jfechanacKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechanacKeyTyped
+        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jfechanacKeyTyped
   
+    private String añoDeCuatroDigitos(String añoDeDos){
+        if(Integer.parseInt("20"+añoDeDos)>Calendar.getInstance().get(Calendar.YEAR)){
+            return "19"+añoDeDos;
+        }else{
+            return "20"+añoDeDos;
+        }
+    }    
+    
   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -697,7 +803,7 @@ public class AltaAdherente extends javax.swing.JFrame {
     private javax.swing.JTextField jedad;
     private javax.swing.JFormattedTextField jfechaalta;
     private javax.swing.JFormattedTextField jfechacobertura;
-    private javax.swing.JFormattedTextField jfechanac;
+    private javax.swing.JTextField jfechanac;
     private javax.swing.JTextField jnombre;
     private javax.swing.JTextField jnrosocio;
     private javax.swing.JComboBox<String> jsexo;
