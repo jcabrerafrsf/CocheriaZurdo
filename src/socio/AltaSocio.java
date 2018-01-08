@@ -19,7 +19,7 @@ public class AltaSocio extends javax.swing.JFrame {
     public AltaSocio() {
         initComponents(); 
         this.setVisible(true);
-        setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/src/main/resources/logocz.png")).getImage());
         setLocationRelativeTo(null);
         cargarTarifas();
         this.jnumeroadherentes.setText("0");
@@ -84,6 +84,7 @@ public class AltaSocio extends javax.swing.JFrame {
         
         try {
         fecha = formatoDelTexto.parse(jfechanac.getText());
+        System.out.println(fecha);
         fecha2 = formatoDelTexto.parse(jfechaalta.getText());
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
@@ -231,7 +232,6 @@ public class AltaSocio extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jsexo = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        jfechanac = new javax.swing.JFormattedTextField();
         jLabel11 = new javax.swing.JLabel();
         jdireccion = new javax.swing.JTextField();
         jlocalidad = new javax.swing.JComboBox<>();
@@ -265,6 +265,7 @@ public class AltaSocio extends javax.swing.JFrame {
         jSeparator8 = new javax.swing.JSeparator();
         jSeparator9 = new javax.swing.JSeparator();
         jcodigotarifa = new javax.swing.JComboBox<>();
+        jfechanac = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INGRESO DE NUEVO SOCIO");
@@ -334,19 +335,6 @@ public class AltaSocio extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(240, 240, 240));
         jLabel8.setText("FECHA DE NACIMIENTO:");
-
-        jfechanac.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
-        jfechanac.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jfechanac.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jfechanacFocusLost(evt);
-            }
-        });
-        jfechanac.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jfechanacKeyTyped(evt);
-            }
-        });
 
         jLabel11.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(240, 240, 240));
@@ -418,11 +406,6 @@ public class AltaSocio extends javax.swing.JFrame {
 
         jfechaalta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
         jfechaalta.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jfechaalta.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jfechaaltaMousePressed(evt);
-            }
-        });
 
         jfechacobertura.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
         jfechacobertura.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -510,6 +493,18 @@ public class AltaSocio extends javax.swing.JFrame {
             }
         });
 
+        jfechanac.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jfechanac.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jfechanacFocusLost(evt);
+            }
+        });
+        jfechanac.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jfechanacKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -549,8 +544,8 @@ public class AltaSocio extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addComponent(jLabel8)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(18, 18, 18)
                                             .addComponent(jLabel11)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -664,11 +659,11 @@ public class AltaSocio extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
                     .addComponent(jdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
-                    .addComponent(jtelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -921,32 +916,6 @@ public class AltaSocio extends javax.swing.JFrame {
             evt.consume();*/
     }//GEN-LAST:event_jdireccionKeyTyped
 
-    private void jfechanacKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechanacKeyTyped
-        if(((evt.getKeyChar()>=48) && (evt.getKeyChar()<=57)) || (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE) || (evt.getKeyChar() == KeyEvent.VK_SLASH)){
-            int cont = jfechanac.getText().length();
-            if (evt.getKeyChar() == KeyEvent.VK_SLASH){
-                if (cont>=3)
-                    cont=5;
-            }
-            if (cont>=10){
-                if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE)
-                    cont--;
-                else
-                    evt.consume();
-            }
-            else{
-                if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
-                    if (cont>0)
-                        cont--;
-                }
-                else
-                    cont++;
-            }
-        }
-        else
-            evt.consume();
-    }//GEN-LAST:event_jfechanacKeyTyped
-
     private void jnombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jnombreFocusGained
     }//GEN-LAST:event_jnombreFocusGained
 
@@ -995,13 +964,6 @@ public class AltaSocio extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btEXITMouseClicked
 
-    private void jfechanacFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusLost
-        if(this.jfechanac.getText().isEmpty()){ 
-        }else{
-            fechaSistema();
-        }        
-    }//GEN-LAST:event_jfechanacFocusLost
-
     private void jcodigotarifaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcodigotarifaFocusLost
         setPrecio();
     }//GEN-LAST:event_jcodigotarifaFocusLost
@@ -1014,9 +976,69 @@ public class AltaSocio extends javax.swing.JFrame {
         setPrecio();
     }//GEN-LAST:event_jcodigotarifaItemStateChanged
 
-    private void jfechaaltaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jfechaaltaMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jfechaaltaMousePressed
+    private void jfechanacKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechanacKeyTyped
+        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jfechanacKeyTyped
+
+    private void jfechanacFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusLost
+        if(jfechanac.getText().charAt(2)==47 && jfechanac.getText().charAt(5)==47 && jfechanac.getText().length()==10){
+            fechaSistema();
+        }else{
+            String fechanacAux=jfechanac.getText();
+            if(fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47 && fechanacAux.length()==8){
+                jfechanac.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
+                fechaSistema();
+            }else{
+                if (fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47 && fechanacAux.length()==9){
+                    jfechanac.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
+                    fechaSistema();
+                }else{
+                    if(fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47 && fechanacAux.length()==9){
+                        jfechanac.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
+                        fechaSistema();
+                    }else{
+                        //PARA AÑOS DE DOS DIGITOS
+                        if(fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47 && fechanacAux.length()==6){
+                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
+                            jfechanac.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
+                            fechaSistema();
+                        }else{
+                            if(fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47 && fechanacAux.length()==7){
+                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                jfechanac.setText('0' + fechanacAux.substring(0, 5) + año);
+                                fechaSistema();
+                            }else{
+                                if(fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47 && fechanacAux.length()==7){
+                                    String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                    jfechanac.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
+                                    fechaSistema();
+                                }else{
+                                    if(fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47 && fechanacAux.length()==8){
+                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
+                                        jfechanac.setText(fechanacAux.substring(0, 6) + año);
+                                        fechaSistema();
+                                    }else{
+                                      jfechanac.setText("");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jfechanacFocusLost
+    
+    private String añoDeCuatroDigitos(String añoDeDos){
+        Date now = new Date();
+        if(Integer.parseInt("20"+añoDeDos)>now.getYear()){
+            return "19"+añoDeDos;
+        }else{
+            return "20"+añoDeDos;
+        }
+    }
     
     /**
      * @param args the command line arguments
@@ -1094,7 +1116,7 @@ public class AltaSocio extends javax.swing.JFrame {
     private javax.swing.JTextField jedad;
     private javax.swing.JFormattedTextField jfechaalta;
     private javax.swing.JFormattedTextField jfechacobertura;
-    private javax.swing.JFormattedTextField jfechanac;
+    private javax.swing.JTextField jfechanac;
     private javax.swing.JComboBox<String> jlocalidad;
     private javax.swing.JTextField jnombre;
     private javax.swing.JTextField jnumeroadherentes;
