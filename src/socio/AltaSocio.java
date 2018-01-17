@@ -250,8 +250,6 @@ public class AltaSocio extends javax.swing.JFrame {
         jcodigoobrasocial = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jedad = new javax.swing.JTextField();
-        jfechaalta = new javax.swing.JFormattedTextField();
-        jfechacobertura = new javax.swing.JFormattedTextField();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         btcargar = new javax.swing.JButton();
@@ -270,6 +268,8 @@ public class AltaSocio extends javax.swing.JFrame {
         jSeparator9 = new javax.swing.JSeparator();
         jcodigotarifa = new javax.swing.JComboBox<>();
         jfechanac = new javax.swing.JTextField();
+        jfechaalta = new javax.swing.JTextField();
+        jfechacobertura = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INGRESO DE NUEVO SOCIO");
@@ -418,12 +418,6 @@ public class AltaSocio extends javax.swing.JFrame {
         jedad.setEditable(false);
         jedad.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
 
-        jfechaalta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
-        jfechaalta.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-
-        jfechacobertura.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
-        jfechacobertura.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-
         jLabel16.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(240, 240, 240));
         jLabel16.setText("FECHA ALTA:");
@@ -523,6 +517,36 @@ public class AltaSocio extends javax.swing.JFrame {
             }
         });
 
+        jfechaalta.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jfechaalta.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jfechaaltaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jfechaaltaFocusLost(evt);
+            }
+        });
+        jfechaalta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jfechaaltaKeyTyped(evt);
+            }
+        });
+
+        jfechacobertura.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jfechacobertura.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jfechacoberturaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jfechacoberturaFocusLost(evt);
+            }
+        });
+        jfechacobertura.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jfechacoberturaKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -584,7 +608,7 @@ public class AltaSocio extends javax.swing.JFrame {
                                             .addComponent(jLabel9)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(jnumeroadherentes, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 7, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(83, 83, 83)
                                 .addComponent(jLabel14)
@@ -615,13 +639,13 @@ public class AltaSocio extends javax.swing.JFrame {
                         .addComponent(jedad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 120, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btcargar, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -709,8 +733,8 @@ public class AltaSocio extends javax.swing.JFrame {
                     .addComponent(jLabel18)
                     .addComponent(jedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
-                    .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17)
+                    .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1080,6 +1104,120 @@ public class AltaSocio extends javax.swing.JFrame {
             int Y = thisY + yMoved;
             this.setLocation(X, Y);
     }//GEN-LAST:event_jPanel1MouseDragged
+
+    private void jfechaaltaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechaaltaFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jfechaaltaFocusGained
+
+    private void jfechaaltaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechaaltaFocusLost
+        if (this.jfechaalta.getText().isEmpty()){
+            this.jfechaalta.setBackground(Color.RED);
+        }else{
+            if(jfechaalta.getText().length()==10 && jfechaalta.getText().charAt(2)==47 && jfechaalta.getText().charAt(5)==47){
+                
+            }else{
+                String fechanacAux=jfechaalta.getText();
+                if(fechanacAux.length()==8 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                    jfechaalta.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
+                }else{
+                    if (fechanacAux.length()==9 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                        jfechaalta.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
+                    }else{
+                        if(fechanacAux.length()==9 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                            jfechaalta.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
+                        }else{
+                            //PARA AÑOS DE DOS DIGITOS
+                            if(fechanacAux.length()==6 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
+                                jfechaalta.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
+                            }else{
+                                if(fechanacAux.length()==7 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                                    String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                    jfechaalta.setText('0' + fechanacAux.substring(0, 5) + año);
+                                }else{
+                                    if(fechanacAux.length()==7 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                        jfechaalta.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
+                                    }else{
+                                        if(fechanacAux.length()==8 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47){
+                                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
+                                            jfechaalta.setText(fechanacAux.substring(0, 6) + año);
+                                        }else{
+                                            jfechaalta.setText("");
+                                            jfechaalta.setBackground(Color.red);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jfechaaltaFocusLost
+
+    private void jfechaaltaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechaaltaKeyTyped
+        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jfechaaltaKeyTyped
+
+    private void jfechacoberturaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechacoberturaFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jfechacoberturaFocusGained
+
+    private void jfechacoberturaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechacoberturaFocusLost
+        if (this.jfechacobertura.getText().isEmpty()){
+            this.jfechacobertura.setBackground(Color.RED);
+        }else{
+            if(jfechacobertura.getText().length()==10 && jfechacobertura.getText().charAt(2)==47 && jfechacobertura.getText().charAt(5)==47){
+                
+            }else{
+                String fechanacAux=jfechacobertura.getText();
+                if(fechanacAux.length()==8 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                    jfechacobertura.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
+                }else{
+                    if (fechanacAux.length()==9 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                        jfechacobertura.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
+                    }else{
+                        if(fechanacAux.length()==9 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                            jfechacobertura.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
+                        }else{
+                            //PARA AÑOS DE DOS DIGITOS
+                            if(fechanacAux.length()==6 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
+                                jfechacobertura.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
+                            }else{
+                                if(fechanacAux.length()==7 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                                    String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                    jfechacobertura.setText('0' + fechanacAux.substring(0, 5) + año);
+                                }else{
+                                    if(fechanacAux.length()==7 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                        jfechacobertura.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
+                                    }else{
+                                        if(fechanacAux.length()==8 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47){
+                                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
+                                            jfechacobertura.setText(fechanacAux.substring(0, 6) + año);
+                                        }else{
+                                            jfechacobertura.setText("");
+                                            jfechacobertura.setBackground(Color.red);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jfechacoberturaFocusLost
+
+    private void jfechacoberturaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechacoberturaKeyTyped
+        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jfechacoberturaKeyTyped
     
     private String añoDeCuatroDigitos(String añoDeDos){
         if(Integer.parseInt("20"+añoDeDos)>Calendar.getInstance().get(Calendar.YEAR)){
@@ -1163,8 +1301,8 @@ public class AltaSocio extends javax.swing.JFrame {
     private javax.swing.JTextField jdireccion;
     private javax.swing.JFormattedTextField jdni;
     private javax.swing.JTextField jedad;
-    private javax.swing.JFormattedTextField jfechaalta;
-    private javax.swing.JFormattedTextField jfechacobertura;
+    private javax.swing.JTextField jfechaalta;
+    private javax.swing.JTextField jfechacobertura;
     private javax.swing.JTextField jfechanac;
     private javax.swing.JComboBox<String> jlocalidad;
     private javax.swing.JTextField jnombre;
