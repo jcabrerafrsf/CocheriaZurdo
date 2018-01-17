@@ -23,7 +23,7 @@ public class AltaSocio extends javax.swing.JFrame {
     public AltaSocio() {
         initComponents(); 
         this.setVisible(true);
-        setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage());
+//        setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage());
         setLocationRelativeTo(null);
         cargarTarifas();
         this.jnumeroadherentes.setText("0");
@@ -459,23 +459,23 @@ public class AltaSocio extends javax.swing.JFrame {
         jLabel19.setForeground(new java.awt.Color(240, 240, 240));
         jLabel19.setText("PRECIO:");
 
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/altauser.png"))); // NOI18N
+        jLabel20.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\altauser.png")); // NOI18N
 
-        btEXIT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/close-circular-button-of-a-cross (1).png"))); // NOI18N
+        btEXIT.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\close-circular-button-of-a-cross (1).png")); // NOI18N
         btEXIT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btEXITMouseClicked(evt);
             }
         });
 
-        btMINIMIZAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/minus-sign-in-a-circle (1).png"))); // NOI18N
+        btMINIMIZAR.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\minus-sign-in-a-circle (1).png")); // NOI18N
         btMINIMIZAR.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btMINIMIZARMouseClicked(evt);
             }
         });
 
-        btBACK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/back-arrow-circular-symbol (1).png"))); // NOI18N
+        btBACK.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\back-arrow-circular-symbol (1).png")); // NOI18N
         btBACK.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btBACKMouseClicked(evt);
@@ -586,9 +586,9 @@ public class AltaSocio extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addComponent(jLabel8)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
+                                            .addGap(12, 12, 12)
                                             .addComponent(jLabel11)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(jdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -639,11 +639,11 @@ public class AltaSocio extends javax.swing.JFrame {
                         .addComponent(jedad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(12, 12, 12)
                         .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1019,16 +1019,14 @@ public class AltaSocio extends javax.swing.JFrame {
     }//GEN-LAST:event_jcodigotarifaItemStateChanged
 
     private void jfechanacFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusGained
-        if (this.jfechanac.getText().equals("dd/mm/aaaa") || this.jfechanac.getBackground().equals(Color.red)){
+        if (this.jfechanac.getText().equals("dd/mm/aaaa")){
             this.jfechanac.setText("");
-            this.jfechanac.setBackground(Color.white);
         }
     }//GEN-LAST:event_jfechanacFocusGained
 
     private void jfechanacFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusLost
         if (this.jfechanac.getText().isEmpty()){
             this.jfechanac.setText("dd/mm/aaaa");
-            this.jfechanac.setBackground(Color.RED);
         }else{
             if(jfechanac.getText().length()==10 && jfechanac.getText().charAt(2)==47 && jfechanac.getText().charAt(5)==47){
                 fechaSistema();
@@ -1068,7 +1066,6 @@ public class AltaSocio extends javax.swing.JFrame {
                                             fechaSistema();
                                         }else{
                                             jfechanac.setText("");
-                                            jfechanac.setBackground(Color.red);
                                         }
                                     }
                                 }
@@ -1111,7 +1108,7 @@ public class AltaSocio extends javax.swing.JFrame {
 
     private void jfechaaltaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechaaltaFocusLost
         if (this.jfechaalta.getText().isEmpty()){
-            this.jfechaalta.setBackground(Color.RED);
+            
         }else{
             if(jfechaalta.getText().length()==10 && jfechaalta.getText().charAt(2)==47 && jfechaalta.getText().charAt(5)==47){
                 
@@ -1144,7 +1141,6 @@ public class AltaSocio extends javax.swing.JFrame {
                                             jfechaalta.setText(fechanacAux.substring(0, 6) + año);
                                         }else{
                                             jfechaalta.setText("");
-                                            jfechaalta.setBackground(Color.red);
                                         }
                                     }
                                 }
@@ -1168,7 +1164,7 @@ public class AltaSocio extends javax.swing.JFrame {
 
     private void jfechacoberturaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechacoberturaFocusLost
         if (this.jfechacobertura.getText().isEmpty()){
-            this.jfechacobertura.setBackground(Color.RED);
+            
         }else{
             if(jfechacobertura.getText().length()==10 && jfechacobertura.getText().charAt(2)==47 && jfechacobertura.getText().charAt(5)==47){
                 
@@ -1201,7 +1197,6 @@ public class AltaSocio extends javax.swing.JFrame {
                                             jfechacobertura.setText(fechanacAux.substring(0, 6) + año);
                                         }else{
                                             jfechacobertura.setText("");
-                                            jfechacobertura.setBackground(Color.red);
                                         }
                                     }
                                 }

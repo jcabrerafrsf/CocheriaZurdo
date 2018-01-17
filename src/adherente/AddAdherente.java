@@ -139,8 +139,6 @@ public class AddAdherente extends javax.swing.JFrame {
         jdni = new javax.swing.JFormattedTextField();
         jtelefono = new javax.swing.JFormattedTextField();
         jedad = new javax.swing.JTextField();
-        jfechaalta = new javax.swing.JFormattedTextField();
-        jfechacobertura = new javax.swing.JFormattedTextField();
         jSeparator3 = new javax.swing.JSeparator();
         CONTINUAR = new javax.swing.JButton();
         j1deN = new javax.swing.JLabel();
@@ -152,6 +150,8 @@ public class AddAdherente extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jfechanac = new javax.swing.JTextField();
+        jfechaalta = new javax.swing.JTextField();
+        jfechacobertura = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -249,12 +249,6 @@ public class AddAdherente extends javax.swing.JFrame {
             }
         });
 
-        jfechaalta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-        jfechaalta.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-
-        jfechacobertura.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-        jfechacobertura.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-
         CONTINUAR.setBackground(new java.awt.Color(153, 255, 153));
         CONTINUAR.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         CONTINUAR.setText("CONTINUAR");
@@ -312,6 +306,36 @@ public class AddAdherente extends javax.swing.JFrame {
             }
         });
 
+        jfechaalta.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jfechaalta.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jfechaaltaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jfechaaltaFocusLost(evt);
+            }
+        });
+        jfechaalta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jfechaaltaKeyTyped(evt);
+            }
+        });
+
+        jfechacobertura.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jfechacobertura.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jfechacoberturaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jfechacoberturaFocusLost(evt);
+            }
+        });
+        jfechacobertura.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jfechacoberturaKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -331,11 +355,11 @@ public class AddAdherente extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
                                 .addComponent(jLabel14)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 832, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
@@ -355,9 +379,9 @@ public class AddAdherente extends javax.swing.JFrame {
                                 .addComponent(jsexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(9, 9, 9)
+                                .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -443,8 +467,8 @@ public class AddAdherente extends javax.swing.JFrame {
                     .addComponent(jLabel13)
                     .addComponent(jedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
-                    .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
+                    .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -602,7 +626,6 @@ public class AddAdherente extends javax.swing.JFrame {
     private void jfechanacFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusLost
         if (this.jfechanac.getText().isEmpty()){
             this.jfechanac.setText("dd/mm/aaaa");
-            this.jfechanac.setBackground(Color.RED);
         }else{
             if(jfechanac.getText().length()==10 && jfechanac.getText().charAt(2)==47 && jfechanac.getText().charAt(5)==47){
                 fechaSistema();
@@ -642,7 +665,6 @@ public class AddAdherente extends javax.swing.JFrame {
                                             fechaSistema();
                                         }else{
                                             jfechanac.setText("");
-                                            jfechanac.setBackground(Color.red);
                                         }
                                     }
                                 }
@@ -661,9 +683,8 @@ public class AddAdherente extends javax.swing.JFrame {
     }//GEN-LAST:event_jfechanacKeyTyped
 
     private void jfechanacFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusGained
-        if (this.jfechanac.getText().equals("dd/mm/aaaa") || this.jfechanac.getBackground().equals(Color.red)){
+        if (this.jfechanac.getText().equals("dd/mm/aaaa")){
             this.jfechanac.setText("");
-            this.jfechanac.setBackground(Color.white);
         }
     }//GEN-LAST:event_jfechanacFocusGained
 
@@ -697,6 +718,118 @@ public class AddAdherente extends javax.swing.JFrame {
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
         clic = evt.getPoint();
     }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jfechaaltaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechaaltaFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jfechaaltaFocusGained
+
+    private void jfechaaltaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechaaltaFocusLost
+        if (this.jfechaalta.getText().isEmpty()){
+            
+        }else{
+            if(jfechaalta.getText().length()==10 && jfechaalta.getText().charAt(2)==47 && jfechaalta.getText().charAt(5)==47){
+
+            }else{
+                String fechanacAux=jfechaalta.getText();
+                if(fechanacAux.length()==8 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                    jfechaalta.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
+                }else{
+                    if (fechanacAux.length()==9 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                        jfechaalta.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
+                    }else{
+                        if(fechanacAux.length()==9 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                            jfechaalta.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
+                        }else{
+                            //PARA AÑOS DE DOS DIGITOS
+                            if(fechanacAux.length()==6 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
+                                jfechaalta.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
+                            }else{
+                                if(fechanacAux.length()==7 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                                    String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                    jfechaalta.setText('0' + fechanacAux.substring(0, 5) + año);
+                                }else{
+                                    if(fechanacAux.length()==7 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                        jfechaalta.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
+                                    }else{
+                                        if(fechanacAux.length()==8 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47){
+                                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
+                                            jfechaalta.setText(fechanacAux.substring(0, 6) + año);
+                                        }else{
+                                            jfechaalta.setText("");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jfechaaltaFocusLost
+
+    private void jfechaaltaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechaaltaKeyTyped
+        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jfechaaltaKeyTyped
+
+    private void jfechacoberturaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechacoberturaFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jfechacoberturaFocusGained
+
+    private void jfechacoberturaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechacoberturaFocusLost
+        if (this.jfechacobertura.getText().isEmpty()){
+            
+        }else{
+            if(jfechacobertura.getText().length()==10 && jfechacobertura.getText().charAt(2)==47 && jfechacobertura.getText().charAt(5)==47){
+
+            }else{
+                String fechanacAux=jfechacobertura.getText();
+                if(fechanacAux.length()==8 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                    jfechacobertura.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
+                }else{
+                    if (fechanacAux.length()==9 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                        jfechacobertura.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
+                    }else{
+                        if(fechanacAux.length()==9 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                            jfechacobertura.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
+                        }else{
+                            //PARA AÑOS DE DOS DIGITOS
+                            if(fechanacAux.length()==6 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
+                                jfechacobertura.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
+                            }else{
+                                if(fechanacAux.length()==7 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                                    String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                    jfechacobertura.setText('0' + fechanacAux.substring(0, 5) + año);
+                                }else{
+                                    if(fechanacAux.length()==7 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                        jfechacobertura.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
+                                    }else{
+                                        if(fechanacAux.length()==8 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47){
+                                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
+                                            jfechacobertura.setText(fechanacAux.substring(0, 6) + año);
+                                        }else{
+                                            jfechacobertura.setText("");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jfechacoberturaFocusLost
+
+    private void jfechacoberturaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechacoberturaKeyTyped
+        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jfechacoberturaKeyTyped
 
     private String añoDeCuatroDigitos(String añoDeDos){
         if(Integer.parseInt("20"+añoDeDos)>Calendar.getInstance().get(Calendar.YEAR)){
@@ -772,8 +905,8 @@ public class AddAdherente extends javax.swing.JFrame {
     private javax.swing.JTextField jdireccion;
     private javax.swing.JFormattedTextField jdni;
     private javax.swing.JTextField jedad;
-    private javax.swing.JFormattedTextField jfechaalta;
-    private javax.swing.JFormattedTextField jfechacobertura;
+    private javax.swing.JTextField jfechaalta;
+    private javax.swing.JTextField jfechacobertura;
     private javax.swing.JTextField jfechanac;
     private javax.swing.JTextField jnombre;
     private javax.swing.JTextField jnrosocio;

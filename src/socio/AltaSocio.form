@@ -108,9 +108,9 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="jfechanac" min="-2" pref="98" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                               <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="jdireccion" min="-2" pref="157" max="-2" attributes="0"/>
@@ -173,11 +173,11 @@
                           <Component id="jedad" min="-2" pref="60" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jfechaalta" min="-2" pref="98" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jfechacobertura" min="-2" pref="98" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -700,14 +700,14 @@
         <Component class="javax.swing.JLabel" name="jLabel20">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/recursos/altauser.png"/>
+              <Image iconType="2" name="C:\Users\Fausto\Documents\NetBeansProjects\CocheriaZurdo\src\recursos\altauser.png"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="btEXIT">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/recursos/close-circular-button-of-a-cross (1).png"/>
+              <Image iconType="2" name="C:\Users\Fausto\Documents\NetBeansProjects\CocheriaZurdo\src\recursos\close-circular-button-of-a-cross (1).png"/>
             </Property>
           </Properties>
           <Events>
@@ -717,7 +717,7 @@
         <Component class="javax.swing.JLabel" name="btMINIMIZAR">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/recursos/minus-sign-in-a-circle (1).png"/>
+              <Image iconType="2" name="C:\Users\Fausto\Documents\NetBeansProjects\CocheriaZurdo\src\recursos\minus-sign-in-a-circle (1).png"/>
             </Property>
           </Properties>
           <Events>
@@ -727,7 +727,7 @@
         <Component class="javax.swing.JLabel" name="btBACK">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/recursos/back-arrow-circular-symbol (1).png"/>
+              <Image iconType="2" name="C:\Users\Fausto\Documents\NetBeansProjects\CocheriaZurdo\src\recursos\back-arrow-circular-symbol (1).png"/>
             </Property>
           </Properties>
           <Events>
