@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import java.util.Date;
 import java.util.logging.*;
 import javax.swing.ImageIcon;
-import tarifa.ConsTarParaAltaSocio;
 
 public class AltaSocio extends javax.swing.JFrame {
 
@@ -19,8 +18,8 @@ public class AltaSocio extends javax.swing.JFrame {
     public AltaSocio() {
         initComponents(); 
         this.setVisible(true);
-        setIconImage(new ImageIcon(getClass().getResource("/src/main/resources/logocz.png")).getImage());
         setLocationRelativeTo(null);
+        setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage());      
         cargarTarifas();
         this.jnumeroadherentes.setText("0");
     }
