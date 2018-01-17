@@ -100,6 +100,7 @@ public class CargarTarifa extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jprecio1 = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
+        jprecio2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -196,6 +197,8 @@ public class CargarTarifa extends javax.swing.JFrame {
 
         jprecio1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
 
+        jprecio2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -235,7 +238,10 @@ public class CargarTarifa extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel20)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jprecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jprecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(331, 331, 331)
+                                .addComponent(jprecio2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 112, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -276,6 +282,8 @@ public class CargarTarifa extends javax.swing.JFrame {
                     .addComponent(jLabel19)
                     .addComponent(jLabel20)
                     .addComponent(jprecio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jprecio2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -428,6 +436,7 @@ public class CargarTarifa extends javax.swing.JFrame {
     private javax.swing.JTextField jnrotarifa;
     private javax.swing.JTextField jprecio;
     private javax.swing.JTextField jprecio1;
+    private javax.swing.JTextField jprecio2;
     // End of variables declaration//GEN-END:variables
     conectar cc = new conectar();
     Connection cn = cc.ConexionMySql();
