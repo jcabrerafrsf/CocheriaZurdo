@@ -7,6 +7,7 @@ package socio;
 
 import cocheriazurdo.Fecha_Hora;
 import cocheriazurdo.conectar;
+import java.awt.Point;
 import socio.OpcionesSocio;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +31,7 @@ import javax.swing.JOptionPane;
 public class EditSocio extends javax.swing.JFrame {
 
     int numerosocio=0;
+    private Point clic;
     
     public EditSocio() {
         initComponents();
@@ -347,7 +350,6 @@ public class EditSocio extends javax.swing.JFrame {
         jsexo = new javax.swing.JComboBox<>();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel9 = new javax.swing.JLabel();
-        jfechanac = new javax.swing.JFormattedTextField();
         jLabel11 = new javax.swing.JLabel();
         jdireccion = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -368,14 +370,15 @@ public class EditSocio extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jedad = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jfechaalta = new javax.swing.JFormattedTextField();
         jLabel21 = new javax.swing.JLabel();
-        jfechacobertura = new javax.swing.JFormattedTextField();
         jSeparator7 = new javax.swing.JSeparator();
         btcargar = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
         jzona = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        jfechanac = new javax.swing.JTextField();
+        jfechaalta = new javax.swing.JTextField();
+        jfechacobertura = new javax.swing.JTextField();
 
         jLabel15.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(240, 240, 240));
@@ -386,6 +389,16 @@ public class EditSocio extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(55, 64, 70));
         jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black), javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white)));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/edituser.png"))); // NOI18N
 
@@ -492,19 +505,6 @@ public class EditSocio extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(240, 240, 240));
         jLabel9.setText("FECHA DE NACIMIENTO:");
 
-        jfechanac.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
-        jfechanac.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jfechanac.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jfechanacFocusLost(evt);
-            }
-        });
-        jfechanac.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jfechanacKeyTyped(evt);
-            }
-        });
-
         jLabel11.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(240, 240, 240));
         jLabel11.setText("DIRECCION:");
@@ -595,15 +595,9 @@ public class EditSocio extends javax.swing.JFrame {
         jLabel20.setForeground(new java.awt.Color(240, 240, 240));
         jLabel20.setText("FECHA ALTA:");
 
-        jfechaalta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-        jfechaalta.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-
         jLabel21.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(240, 240, 240));
         jLabel21.setText("FECHA COBERTURA:");
-
-        jfechacobertura.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-        jfechacobertura.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
 
         btcargar.setBackground(new java.awt.Color(255, 153, 51));
         btcargar.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
@@ -631,6 +625,52 @@ public class EditSocio extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jfechanac.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jfechanac.setText("dd/mm/aaaa");
+        jfechanac.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jfechanacFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jfechanacFocusLost(evt);
+            }
+        });
+        jfechanac.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jfechanacKeyTyped(evt);
+            }
+        });
+
+        jfechaalta.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jfechaalta.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jfechaaltaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jfechaaltaFocusLost(evt);
+            }
+        });
+        jfechaalta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jfechaaltaKeyTyped(evt);
+            }
+        });
+
+        jfechacobertura.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jfechacobertura.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jfechacoberturaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jfechacoberturaFocusLost(evt);
+            }
+        });
+        jfechacobertura.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jfechacoberturaKeyTyped(evt);
             }
         });
 
@@ -699,8 +739,8 @@ public class EditSocio extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -732,12 +772,12 @@ public class EditSocio extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel20)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
                                 .addComponent(jLabel21)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(160, 160, 160)))))
+                                .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(154, 154, 154)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -776,11 +816,11 @@ public class EditSocio extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
                     .addComponent(jdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
-                    .addComponent(jtelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -808,8 +848,8 @@ public class EditSocio extends javax.swing.JFrame {
                     .addComponent(jLabel18)
                     .addComponent(jedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20)
-                    .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21)
+                    .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -948,36 +988,6 @@ public class EditSocio extends javax.swing.JFrame {
         else
         evt.consume();*/
     }//GEN-LAST:event_jdniKeyTyped
-
-    private void jfechanacFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusLost
-        fechaSistema();
-    }//GEN-LAST:event_jfechanacFocusLost
-
-    private void jfechanacKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechanacKeyTyped
-       /* if(((evt.getKeyChar()>=48) && (evt.getKeyChar()<=57)) || (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE) || (evt.getKeyChar() == KeyEvent.VK_SLASH)){
-            int cont = jfechanac.getText().length();
-            if (evt.getKeyChar() == KeyEvent.VK_SLASH){
-                if (cont>=3)
-                cont=5;
-            }
-            if (cont>=10){
-                if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE)
-                cont--;
-                else
-                evt.consume();
-            }
-            else{
-                if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
-                    if (cont>0)
-                    cont--;
-                }
-                else
-                cont++;
-            }
-        }
-        else
-        evt.consume();*/
-    }//GEN-LAST:event_jfechanacKeyTyped
 
     private void jdireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jdireccionKeyTyped
        /* if(((evt.getKeyChar()>=48) && (evt.getKeyChar()<=57)) || ((evt.getKeyChar()>='A') && (evt.getKeyChar()<='Z')) || ((evt.getKeyChar()>='a') && (evt.getKeyChar()<='z')) || (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE) || (evt.getKeyChar() == KeyEvent.VK_SPACE)){
@@ -1181,6 +1191,211 @@ public class EditSocio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jnrosocioFocusGained
 
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+            // get location of Window
+            int thisX = this.getLocation().x;
+            int thisY = this.getLocation().y;
+
+            // Determine how much the mouse moved since the initial click
+            int xMoved = (thisX + evt.getX()) - (thisX + clic.x);
+            int yMoved = (thisY + evt.getY()) - (thisY + clic.y);
+
+            // Move window to this position
+            int X = thisX + xMoved;
+            int Y = thisY + yMoved;
+            this.setLocation(X, Y);
+    }//GEN-LAST:event_jPanel1MouseDragged
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        clic = evt.getPoint();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jfechanacFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusGained
+        if (this.jfechanac.getText().equals("dd/mm/aaaa")){
+            this.jfechanac.setText("");
+        }
+    }//GEN-LAST:event_jfechanacFocusGained
+
+    private void jfechanacFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusLost
+        if (this.jfechanac.getText().isEmpty()){
+            this.jfechanac.setText("dd/mm/aaaa");
+        }else{
+            if(jfechanac.getText().length()==10 && jfechanac.getText().charAt(2)==47 && jfechanac.getText().charAt(5)==47){
+                fechaSistema();
+            }else{
+                String fechanacAux=jfechanac.getText();
+                if(fechanacAux.length()==8 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                    jfechanac.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
+                    fechaSistema();
+                }else{
+                    if (fechanacAux.length()==9 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                        jfechanac.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
+                        fechaSistema();
+                    }else{
+                        if(fechanacAux.length()==9 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                            jfechanac.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
+                            fechaSistema();
+                        }else{
+                            //PARA AÑOS DE DOS DIGITOS
+                            if(fechanacAux.length()==6 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
+                                jfechanac.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
+                                fechaSistema();
+                            }else{
+                                if(fechanacAux.length()==7 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                                    String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                    jfechanac.setText('0' + fechanacAux.substring(0, 5) + año);
+                                    fechaSistema();
+                                }else{
+                                    if(fechanacAux.length()==7 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                        jfechanac.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
+                                        fechaSistema();
+                                    }else{
+                                        if(fechanacAux.length()==8 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47){
+                                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
+                                            jfechanac.setText(fechanacAux.substring(0, 6) + año);
+                                            fechaSistema();
+                                        }else{
+                                            jfechanac.setText("");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jfechanacFocusLost
+
+    private void jfechanacKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechanacKeyTyped
+        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jfechanacKeyTyped
+
+    private void jfechaaltaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechaaltaFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jfechaaltaFocusGained
+
+    private void jfechaaltaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechaaltaFocusLost
+        if (this.jfechaalta.getText().isEmpty()){
+
+        }else{
+            if(jfechaalta.getText().length()==10 && jfechaalta.getText().charAt(2)==47 && jfechaalta.getText().charAt(5)==47){
+
+            }else{
+                String fechanacAux=jfechaalta.getText();
+                if(fechanacAux.length()==8 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                    jfechaalta.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
+                }else{
+                    if (fechanacAux.length()==9 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                        jfechaalta.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
+                    }else{
+                        if(fechanacAux.length()==9 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                            jfechaalta.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
+                        }else{
+                            //PARA AÑOS DE DOS DIGITOS
+                            if(fechanacAux.length()==6 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
+                                jfechaalta.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
+                            }else{
+                                if(fechanacAux.length()==7 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                                    String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                    jfechaalta.setText('0' + fechanacAux.substring(0, 5) + año);
+                                }else{
+                                    if(fechanacAux.length()==7 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                        jfechaalta.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
+                                    }else{
+                                        if(fechanacAux.length()==8 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47){
+                                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
+                                            jfechaalta.setText(fechanacAux.substring(0, 6) + año);
+                                        }else{
+                                            jfechaalta.setText("");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jfechaaltaFocusLost
+
+    private void jfechaaltaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechaaltaKeyTyped
+        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jfechaaltaKeyTyped
+
+    private void jfechacoberturaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechacoberturaFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jfechacoberturaFocusGained
+
+    private void jfechacoberturaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechacoberturaFocusLost
+        if (this.jfechacobertura.getText().isEmpty()){
+
+        }else{
+            if(jfechacobertura.getText().length()==10 && jfechacobertura.getText().charAt(2)==47 && jfechacobertura.getText().charAt(5)==47){
+
+            }else{
+                String fechanacAux=jfechacobertura.getText();
+                if(fechanacAux.length()==8 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                    jfechacobertura.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
+                }else{
+                    if (fechanacAux.length()==9 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                        jfechacobertura.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
+                    }else{
+                        if(fechanacAux.length()==9 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                            jfechacobertura.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
+                        }else{
+                            //PARA AÑOS DE DOS DIGITOS
+                            if(fechanacAux.length()==6 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
+                                jfechacobertura.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
+                            }else{
+                                if(fechanacAux.length()==7 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                                    String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                    jfechacobertura.setText('0' + fechanacAux.substring(0, 5) + año);
+                                }else{
+                                    if(fechanacAux.length()==7 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                        jfechacobertura.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
+                                    }else{
+                                        if(fechanacAux.length()==8 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47){
+                                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
+                                            jfechacobertura.setText(fechanacAux.substring(0, 6) + año);
+                                        }else{
+                                            jfechacobertura.setText("");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jfechacoberturaFocusLost
+
+    private void jfechacoberturaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechacoberturaKeyTyped
+        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jfechacoberturaKeyTyped
+
+    
+    
+    private String añoDeCuatroDigitos(String añoDeDos){
+        if(Integer.parseInt("20"+añoDeDos)>Calendar.getInstance().get(Calendar.YEAR)){
+            return "19"+añoDeDos;
+        }else{
+            return "20"+añoDeDos;
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -1258,9 +1473,9 @@ public class EditSocio extends javax.swing.JFrame {
     private javax.swing.JTextField jdireccion;
     private javax.swing.JFormattedTextField jdni;
     private javax.swing.JTextField jedad;
-    private javax.swing.JFormattedTextField jfechaalta;
-    private javax.swing.JFormattedTextField jfechacobertura;
-    private javax.swing.JFormattedTextField jfechanac;
+    private javax.swing.JTextField jfechaalta;
+    private javax.swing.JTextField jfechacobertura;
+    private javax.swing.JTextField jfechanac;
     private javax.swing.JComboBox<String> jlocalidad;
     private javax.swing.JTextField jnombre;
     private javax.swing.JTextField jnrosocio;

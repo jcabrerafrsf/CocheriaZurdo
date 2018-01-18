@@ -6,6 +6,7 @@
 package tarifa;
 
 import cocheriazurdo.conectar;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,6 +27,8 @@ public class EditarTarifa extends javax.swing.JFrame {
     /**
      * Creates new form EditarTarifa
      */
+    private Point clic;
+    
     public EditarTarifa() {
         initComponents();
         this.setVisible(true);
@@ -47,17 +50,19 @@ public class EditarTarifa extends javax.swing.JFrame {
         Statement st;
         try {
             st = cn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT nombre, precio, estado FROM bdcocheriazurdo.tarifas WHERE nro_tarifa="+nroTarifa);
-            String datos[] = new String [3];        
+            ResultSet rs = st.executeQuery("SELECT nombre, precio, precio_mayoredad, estado FROM bdcocheriazurdo.tarifas WHERE nro_tarifa="+nroTarifa);
+            String datos[] = new String [4];        
                 while(rs.next()){
                         datos[0] = rs.getString("nombre");
                         datos[1] = rs.getString("precio");
-                        datos[2] = rs.getString("estado");
+                        datos[2] = rs.getString("precio_mayoredad");
+                        datos[3] = rs.getString("estado");
                 }
                 rs.close();
                 jnombre.setText(datos[0]);
                 jprecio.setText(datos[1]);
-                if(datos[2].equals("ALTA")){
+                jprecio1.setText(datos[2]);
+                if(datos[3].equals("ALTA")){
                     jestado.setSelectedIndex(0);
                 }else{
                     jestado.setSelectedIndex(1);
@@ -96,12 +101,24 @@ public class EditarTarifa extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
         jLabel23 = new javax.swing.JLabel();
         jestado = new javax.swing.JComboBox<>();
+        jprecio1 = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
         jPanel6.setBackground(new java.awt.Color(55, 64, 70));
         jPanel6.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black), javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white)));
+        jPanel6.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel6MouseDragged(evt);
+            }
+        });
+        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel6MousePressed(evt);
+            }
+        });
 
         btEXIT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/close-circular-button-of-a-cross (1).png"))); // NOI18N
         btEXIT.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -210,6 +227,13 @@ public class EditarTarifa extends javax.swing.JFrame {
         jestado.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jestado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ALTA", "BAJA" }));
 
+        jprecio1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+
+        jLabel24.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setText("MAYOR EDAD: $");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -251,14 +275,16 @@ public class EditarTarifa extends javax.swing.JFrame {
                                     .addComponent(jLabel20)
                                     .addComponent(jLabel21)
                                     .addComponent(jLabel22)
-                                    .addComponent(jLabel23))
+                                    .addComponent(jLabel23)
+                                    .addComponent(jLabel24))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jnrotarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 21, Short.MAX_VALUE)))
+                                    .addComponent(jestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jprecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 6, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -302,6 +328,10 @@ public class EditarTarifa extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(jprecio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
@@ -356,7 +386,7 @@ public class EditarTarifa extends javax.swing.JFrame {
         if(seleccion==0){
 
             try{
-                PreparedStatement pst = cn.prepareStatement("UPDATE bdcocheriazurdo.tarifas SET nombre='"+jnombre.getText()+"', precio="+jprecio.getText()+", estado='"+jestado.getSelectedItem().toString()+"' WHERE nro_tarifa=?;");                                           
+                PreparedStatement pst = cn.prepareStatement("UPDATE bdcocheriazurdo.tarifas SET nombre='"+jnombre.getText()+"', precio="+jprecio.getText()+", precio_mayoredad="+jprecio1.getText()+", estado='"+jestado.getSelectedItem().toString()+"' WHERE nro_tarifa=?;");                                           
                 Integer nTarifa = Integer.valueOf(jnrotarifa.getText());
                 pst.setInt(1, nTarifa);
                 pst.executeUpdate();
@@ -392,10 +422,10 @@ public class EditarTarifa extends javax.swing.JFrame {
     private void jContinuarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jContinuarKeyPressed
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             int seleccion = JOptionPane.showConfirmDialog(null, "Realmente desea editar la tarifa?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if(seleccion==0){
+        if(seleccion==0){
 
             try{
-                PreparedStatement pst = cn.prepareStatement("UPDATE bdcocheriazurdo.tarifas SET nombre='"+jnombre.getText()+"', precio="+jprecio.getText()+" WHERE nro_tarifa=?;");                                           
+                PreparedStatement pst = cn.prepareStatement("UPDATE bdcocheriazurdo.tarifas SET nombre='"+jnombre.getText()+"', precio="+jprecio.getText()+", precio_mayoredad="+jprecio1.getText()+", estado='"+jestado.getSelectedItem().toString()+"' WHERE nro_tarifa=?;");                                           
                 Integer nTarifa = Integer.valueOf(jnrotarifa.getText());
                 pst.setInt(1, nTarifa);
                 pst.executeUpdate();
@@ -404,6 +434,7 @@ public class EditarTarifa extends javax.swing.JFrame {
 
                 Tarifas TF = new Tarifas();
                 this.dispose();
+                TF.setVisible(true);
 
             }catch(NumberFormatException | SQLException e){
                System.out.println(e.getMessage());
@@ -431,6 +462,25 @@ public class EditarTarifa extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_jButton1KeyPressed
+
+    private void jPanel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MousePressed
+        clic = evt.getPoint();
+    }//GEN-LAST:event_jPanel6MousePressed
+
+    private void jPanel6MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseDragged
+        // get location of Window
+        int thisX = this.getLocation().x;
+        int thisY = this.getLocation().y;
+
+        // Determine how much the mouse moved since the initial click
+        int xMoved = (thisX + evt.getX()) - (thisX + clic.x);
+        int yMoved = (thisY + evt.getY()) - (thisY + clic.y);
+
+        // Move window to this position
+        int X = thisX + xMoved;
+        int Y = thisY + yMoved;
+        this.setLocation(X, Y);
+    }//GEN-LAST:event_jPanel6MouseDragged
 
     /**
      * @param args the command line arguments
@@ -482,6 +532,7 @@ public class EditarTarifa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -491,6 +542,7 @@ public class EditarTarifa extends javax.swing.JFrame {
     private javax.swing.JTextField jnombre;
     private javax.swing.JTextField jnrotarifa;
     private javax.swing.JTextField jprecio;
+    private javax.swing.JTextField jprecio1;
     // End of variables declaration//GEN-END:variables
     conectar cc = new conectar();
     Connection cn = cc.ConexionMySql();

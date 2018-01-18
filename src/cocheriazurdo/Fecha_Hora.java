@@ -24,7 +24,10 @@ public class Fecha_Hora {
         int mes = c2.get(Calendar.MONTH);
         int anio = c2.get(Calendar.YEAR);
         
-       fechaSystem = (dia+"/"+(mes+1)+"/"+anio);
+        if ((mes+1)<10)
+            fechaSystem = (dia+"/0"+(mes+1)+"/"+anio);
+        else
+            fechaSystem = (dia+"/"+(mes+1)+"/"+anio);
     
     return fechaSystem;
     }
@@ -72,7 +75,10 @@ public class Fecha_Hora {
         int mes = calendar.get(Calendar.MONTH);
         int anio = calendar.get(Calendar.YEAR);
         
-        return (dia+"/"+(mes+1)+"/"+anio);
+        if ((mes+1)<10)
+            return (dia+"/0"+(mes+1)+"/"+anio);
+        else
+            return (dia+"/"+(mes+1)+"/"+anio);
         }
         else{
             if(edad>5 && edad<=10){
@@ -82,7 +88,10 @@ public class Fecha_Hora {
                 int mes = calendar.get(Calendar.MONTH);
                 int anio = calendar.get(Calendar.YEAR);
         
-                return (dia+"/"+(mes+1)+"/"+anio);
+                if ((mes+1)<10)
+                    return (dia+"/0"+(mes+1)+"/"+anio);
+                else
+                    return (dia+"/"+(mes+1)+"/"+anio);
             }
             else{
                 if(edad>10 && edad<=15){
@@ -92,7 +101,10 @@ public class Fecha_Hora {
                 int mes = calendar.get(Calendar.MONTH);
                 int anio = calendar.get(Calendar.YEAR);
         
-                return (dia+"/"+(mes+1)+"/"+anio);
+                if ((mes+1)<10)
+                    return (dia+"/0"+(mes+1)+"/"+anio);
+                else
+                    return (dia+"/"+(mes+1)+"/"+anio);
                 }
                 else{
                     if(edad>15 && edad<=20){
@@ -102,7 +114,10 @@ public class Fecha_Hora {
                         int mes = calendar.get(Calendar.MONTH);
                         int anio = calendar.get(Calendar.YEAR);
 
-                        return (dia+"/"+(mes+1)+"/"+anio);
+                        if ((mes+1)<10)
+                            return (dia+"/0"+(mes+1)+"/"+anio);
+                        else
+                            return (dia+"/"+(mes+1)+"/"+anio);
                     }
                     else{
                         if(edad>20 && edad<=25){
@@ -112,7 +127,10 @@ public class Fecha_Hora {
                             int mes = calendar.get(Calendar.MONTH);
                             int anio = calendar.get(Calendar.YEAR);
 
-                            return (dia+"/"+(mes+1)+"/"+anio);
+                            if ((mes+1)<10)
+                                return (dia+"/0"+(mes+1)+"/"+anio);
+                            else
+                                return (dia+"/"+(mes+1)+"/"+anio);
                         }
                         else{
                             if(edad>25 && edad<=30){
@@ -122,7 +140,10 @@ public class Fecha_Hora {
                                 int mes = calendar.get(Calendar.MONTH);
                                 int anio = calendar.get(Calendar.YEAR);
 
-                                return (dia+"/"+(mes+1)+"/"+anio);                          
+                                if ((mes+1)<10)
+                                    return (dia+"/0"+(mes+1)+"/"+anio);
+                                else
+                                    return (dia+"/"+(mes+1)+"/"+anio);                         
                                 }
                             else{
                                 if(edad>30 && edad<=35){
@@ -132,7 +153,10 @@ public class Fecha_Hora {
                                     int mes = calendar.get(Calendar.MONTH);
                                     int anio = calendar.get(Calendar.YEAR);
 
-                                    return (dia+"/"+(mes+1)+"/"+anio);
+                                    if ((mes+1)<10)
+                                        return (dia+"/0"+(mes+1)+"/"+anio);
+                                    else
+                                        return (dia+"/"+(mes+1)+"/"+anio);
                                 }
                                 else{
                                     if(edad>35 && edad<=40){
@@ -142,7 +166,10 @@ public class Fecha_Hora {
                                         int mes = calendar.get(Calendar.MONTH);
                                         int anio = calendar.get(Calendar.YEAR);
 
-                                        return (dia+"/"+(mes+1)+"/"+anio);
+                                        if ((mes+1)<10)
+                                            return (dia+"/0"+(mes+1)+"/"+anio);
+                                        else
+                                            return (dia+"/"+(mes+1)+"/"+anio);
                                     }
                                     else{
                                         if(edad>40 && edad<=45){
@@ -152,7 +179,10 @@ public class Fecha_Hora {
                                             int mes = calendar.get(Calendar.MONTH);
                                             int anio = calendar.get(Calendar.YEAR);
 
-                                            return (dia+"/"+(mes+1)+"/"+anio);
+                                            if ((mes+1)<10)
+                                                return (dia+"/0"+(mes+1)+"/"+anio);
+                                            else
+                                                return (dia+"/"+(mes+1)+"/"+anio);
                                         }
                                         else{
                                             if(edad>45 && edad<=50){
@@ -162,7 +192,10 @@ public class Fecha_Hora {
                                                 int mes = calendar.get(Calendar.MONTH);
                                                 int anio = calendar.get(Calendar.YEAR);
 
-                                                return (dia+"/"+(mes+1)+"/"+anio);
+                                                if ((mes+1)<10)
+                                                    return (dia+"/0"+(mes+1)+"/"+anio);
+                                                else
+                                                    return (dia+"/"+(mes+1)+"/"+anio);
                                             }
                                             else{
                                                 if(edad>50 && edad<=55){
@@ -172,7 +205,10 @@ public class Fecha_Hora {
                                                     int mes = calendar.get(Calendar.MONTH);
                                                     int anio = calendar.get(Calendar.YEAR);
 
-                                                    return (dia+"/"+(mes+1)+"/"+anio);
+                                                    if ((mes+1)<10)
+                                                        return (dia+"/0"+(mes+1)+"/"+anio);
+                                                    else
+                                                        return (dia+"/"+(mes+1)+"/"+anio);
                                                 }
                                                 else{
                                                     if(edad>55 && edad<=60){
@@ -182,7 +218,10 @@ public class Fecha_Hora {
                                                         int mes = calendar.get(Calendar.MONTH);
                                                         int anio = calendar.get(Calendar.YEAR);
 
-                                                        return (dia+"/"+(mes+1)+"/"+anio);
+                                                        if ((mes+1)<10)
+                                                            return (dia+"/0"+(mes+1)+"/"+anio);
+                                                        else
+                                                            return (dia+"/"+(mes+1)+"/"+anio);
                                                     }
                                                     else{
                                                         if(edad>60 && edad<=65){
@@ -192,7 +231,10 @@ public class Fecha_Hora {
                                                             int mes = calendar.get(Calendar.MONTH);
                                                             int anio = calendar.get(Calendar.YEAR);
 
-                                                            return (dia+"/"+(mes+1)+"/"+anio);
+                                                            if ((mes+1)<10)
+                                                                return (dia+"/0"+(mes+1)+"/"+anio);
+                                                            else
+                                                                return (dia+"/"+(mes+1)+"/"+anio);
                                                         }
                                                         else{
                                                             if(edad>65 && edad<=70){
@@ -202,7 +244,10 @@ public class Fecha_Hora {
                                                                 int mes = calendar.get(Calendar.MONTH);
                                                                 int anio = calendar.get(Calendar.YEAR);
 
-                                                                return (dia+"/"+(mes+1)+"/"+anio);
+                                                                if ((mes+1)<10)
+                                                                    return (dia+"/0"+(mes+1)+"/"+anio);
+                                                                else
+                                                                    return (dia+"/"+(mes+1)+"/"+anio);
                                                             }
                                                             else{
                                                                 if(edad>70 && edad<=75){
@@ -212,7 +257,10 @@ public class Fecha_Hora {
                                                                     int mes = calendar.get(Calendar.MONTH);
                                                                     int anio = calendar.get(Calendar.YEAR);
 
-                                                                    return (dia+"/"+(mes+1)+"/"+anio);
+                                                                    if ((mes+1)<10)
+                                                                        return (dia+"/0"+(mes+1)+"/"+anio);
+                                                                    else
+                                                                        return (dia+"/"+(mes+1)+"/"+anio);
                                                                 }
                                                                 else{
                                                                     if(edad>75 && edad<=80){
@@ -222,7 +270,10 @@ public class Fecha_Hora {
                                                                         int mes = calendar.get(Calendar.MONTH);
                                                                         int anio = calendar.get(Calendar.YEAR);
 
-                                                                        return (dia+"/"+(mes+1)+"/"+anio);
+                                                                        if ((mes+1)<10)
+                                                                            return (dia+"/0"+(mes+1)+"/"+anio);
+                                                                        else
+                                                                            return (dia+"/"+(mes+1)+"/"+anio);
                                                                     }
                                                                     else{
                                                                         calendar.add(Calendar.MONTH,27);  // numero de meses a añadir
@@ -231,7 +282,10 @@ public class Fecha_Hora {
                                                                         int mes = calendar.get(Calendar.MONTH);
                                                                         int anio = calendar.get(Calendar.YEAR);
 
-                                                                        return (dia+"/"+(mes+1)+"/"+anio);
+                                                                        if ((mes+1)<10)
+                                                                            return (dia+"/0"+(mes+1)+"/"+anio);
+                                                                        else
+                                                                            return (dia+"/"+(mes+1)+"/"+anio);
                                                                         }
                                                                     }
                                                                 }

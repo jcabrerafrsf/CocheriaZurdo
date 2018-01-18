@@ -5,6 +5,7 @@
  */
 package adherente;
 
+import java.awt.Point;
 import javax.swing.ImageIcon;
 import socio.ConsultaSocios;
 import socio.AltaSocio;
@@ -18,6 +19,8 @@ public class AddAdherenteExito extends javax.swing.JFrame {
     /**
      * Creates new form AddAdherenteExito
      */
+    private Point clic;
+    
     public AddAdherenteExito() {
         initComponents();
         this.setVisible(true);
@@ -49,6 +52,16 @@ public class AddAdherenteExito extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(55, 64, 70));
         jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black), javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white)));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -167,6 +180,25 @@ public class AddAdherenteExito extends javax.swing.JFrame {
         this.dispose();    
         CUS.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        clic = evt.getPoint();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+        // get location of Window
+        int thisX = this.getLocation().x;
+        int thisY = this.getLocation().y;
+
+        // Determine how much the mouse moved since the initial click
+        int xMoved = (thisX + evt.getX()) - (thisX + clic.x);
+        int yMoved = (thisY + evt.getY()) - (thisY + clic.y);
+
+        // Move window to this position
+        int X = thisX + xMoved;
+        int Y = thisY + yMoved;
+        this.setLocation(X, Y);
+    }//GEN-LAST:event_jPanel1MouseDragged
 
     /**
      * @param args the command line arguments

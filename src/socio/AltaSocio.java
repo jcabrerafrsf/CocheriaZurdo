@@ -4,22 +4,27 @@ package socio;
 import adherente.AltaAdherente;
 import cocheriazurdo.Fecha_Hora;
 import cocheriazurdo.conectar;
+import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.sql.*;
 import java.text.*;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import java.util.Date;
 import java.util.logging.*;
 import javax.swing.ImageIcon;
+import tarifa.ConsTarParaAltaSocio;
 
 public class AltaSocio extends javax.swing.JFrame {
 
+    private Point clic;
     
     public AltaSocio() {
         initComponents(); 
         this.setVisible(true);
+//        setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage());
         setLocationRelativeTo(null);
-        setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage());      
         cargarTarifas();
         this.jnumeroadherentes.setText("0");
     }
@@ -31,13 +36,15 @@ public class AltaSocio extends javax.swing.JFrame {
         
         try {
             Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT precio FROM bdcocheriazurdo.tarifas WHERE nombre="+"'"+nombreTarifa+"'");
+            ResultSet rs = st.executeQuery("SELECT precio, precio_mayoredad FROM bdcocheriazurdo.tarifas WHERE nombre="+"'"+nombreTarifa+"'");
             //si hay dos, HOUSTON WE ARE PROBLEM
             while(rs.next()){
-                datos[0] = rs.getString("precio");        
+                datos[0] = rs.getString("precio"); 
+                datos[1] = rs.getString("precio_mayoredad");   
             }
             
             jprecio.setText(datos[0]);
+            jprecio1.setText(datos[1]);
             
             
 
@@ -245,8 +252,6 @@ public class AltaSocio extends javax.swing.JFrame {
         jcodigoobrasocial = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jedad = new javax.swing.JTextField();
-        jfechaalta = new javax.swing.JFormattedTextField();
-        jfechacobertura = new javax.swing.JFormattedTextField();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         btcargar = new javax.swing.JButton();
@@ -265,6 +270,10 @@ public class AltaSocio extends javax.swing.JFrame {
         jSeparator9 = new javax.swing.JSeparator();
         jcodigotarifa = new javax.swing.JComboBox<>();
         jfechanac = new javax.swing.JTextField();
+        jfechaalta = new javax.swing.JTextField();
+        jfechacobertura = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jprecio1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INGRESO DE NUEVO SOCIO");
@@ -272,6 +281,16 @@ public class AltaSocio extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(55, 64, 70));
         jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black), javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white)));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(240, 240, 240));
@@ -403,12 +422,6 @@ public class AltaSocio extends javax.swing.JFrame {
         jedad.setEditable(false);
         jedad.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
 
-        jfechaalta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
-        jfechaalta.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-
-        jfechacobertura.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
-        jfechacobertura.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-
         jLabel16.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(240, 240, 240));
         jLabel16.setText("FECHA ALTA:");
@@ -450,23 +463,18 @@ public class AltaSocio extends javax.swing.JFrame {
         jLabel19.setForeground(new java.awt.Color(240, 240, 240));
         jLabel19.setText("PRECIO:");
 
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/altauser.png"))); // NOI18N
-
-        btEXIT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/close-circular-button-of-a-cross (1).png"))); // NOI18N
         btEXIT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btEXITMouseClicked(evt);
             }
         });
 
-        btMINIMIZAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/minus-sign-in-a-circle (1).png"))); // NOI18N
         btMINIMIZAR.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btMINIMIZARMouseClicked(evt);
             }
         });
 
-        btBACK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/back-arrow-circular-symbol (1).png"))); // NOI18N
         btBACK.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btBACKMouseClicked(evt);
@@ -485,15 +493,19 @@ public class AltaSocio extends javax.swing.JFrame {
             }
         });
         jcodigotarifa.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
                 jcodigotarifaCaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
 
         jfechanac.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jfechanac.setText("dd/mm/aaaa");
         jfechanac.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jfechanacFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jfechanacFocusLost(evt);
             }
@@ -504,18 +516,93 @@ public class AltaSocio extends javax.swing.JFrame {
             }
         });
 
+        jfechaalta.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jfechaalta.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jfechaaltaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jfechaaltaFocusLost(evt);
+            }
+        });
+        jfechaalta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jfechaaltaKeyTyped(evt);
+            }
+        });
+
+        jfechacobertura.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jfechacobertura.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jfechacoberturaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jfechacoberturaFocusLost(evt);
+            }
+        });
+        jfechacobertura.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jfechacoberturaKeyTyped(evt);
+            }
+        });
+
+        jLabel21.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel21.setText("MAYOR EDAD:");
+
+        jprecio1.setEditable(false);
+        jprecio1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jprecio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jprecio1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator9))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(124, 124, 124)
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jedad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btcargar, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btBACK)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btMINIMIZAR)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btEXIT))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator8)))
+                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jzona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator2)
@@ -543,9 +630,9 @@ public class AltaSocio extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addComponent(jLabel8)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
+                                            .addGap(12, 12, 12)
                                             .addComponent(jLabel11)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(jdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -565,9 +652,9 @@ public class AltaSocio extends javax.swing.JFrame {
                                             .addComponent(jLabel9)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(jnumeroadherentes, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 7, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(83, 83, 83)
+                                .addGap(21, 21, 21)
                                 .addComponent(jLabel14)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jcodigotarifa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -576,51 +663,23 @@ public class AltaSocio extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
+                                .addComponent(jLabel21)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jprecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jcodigoobrasocial, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(112, 112, 112)))
-                        .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGap(32, 32, 32)))
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator9))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
-                        .addComponent(jLabel18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jedad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 120, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btcargar, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel20)
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btBACK)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btMINIMIZAR)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btEXIT))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator8)))
-                .addContainerGap())
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jzona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -631,10 +690,9 @@ public class AltaSocio extends javax.swing.JFrame {
                         .addComponent(btBACK)
                         .addComponent(btEXIT)
                         .addComponent(btMINIMIZAR))
-                    .addComponent(jLabel20)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel1)))
+                    .addComponent(jLabel20))
+                .addGap(12, 12, 12)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -682,7 +740,9 @@ public class AltaSocio extends javax.swing.JFrame {
                     .addComponent(jLabel15)
                     .addComponent(jcodigoobrasocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
-                    .addComponent(jcodigotarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcodigotarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21)
+                    .addComponent(jprecio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -690,8 +750,8 @@ public class AltaSocio extends javax.swing.JFrame {
                     .addComponent(jLabel18)
                     .addComponent(jedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
-                    .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17)
+                    .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -717,7 +777,7 @@ public class AltaSocio extends javax.swing.JFrame {
     private void btcargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btcargarActionPerformed
         
         if (!(jnombre.getText().isEmpty() || japellido.getText().isEmpty() || jdni.getText().isEmpty() || jtelefono.getText().isEmpty() ||
-            jdireccion.getText().isEmpty() || jfechanac.getText().isEmpty() || jcodigoobrasocial.getText().isEmpty())){
+            jdireccion.getText().isEmpty() || jfechanac.getText().isEmpty() || jfechanac.getText().equals("dd/mm/aaaa") || jcodigoobrasocial.getText().isEmpty())){
             
             if(jcodigotarifa.getSelectedItem()!="Seleccionar item"){
                 cargaDatos();
@@ -975,51 +1035,55 @@ public class AltaSocio extends javax.swing.JFrame {
         setPrecio();
     }//GEN-LAST:event_jcodigotarifaItemStateChanged
 
-    private void jfechanacKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechanacKeyTyped
-        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
-            evt.consume();
+    private void jfechanacFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusGained
+        if (this.jfechanac.getText().equals("dd/mm/aaaa")){
+            this.jfechanac.setText("");
         }
-    }//GEN-LAST:event_jfechanacKeyTyped
+    }//GEN-LAST:event_jfechanacFocusGained
 
     private void jfechanacFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusLost
-        if(jfechanac.getText().charAt(2)==47 && jfechanac.getText().charAt(5)==47 && jfechanac.getText().length()==10){
-            fechaSistema();
+        if (this.jfechanac.getText().isEmpty()){
+            this.jfechanac.setText("dd/mm/aaaa");
         }else{
-            String fechanacAux=jfechanac.getText();
-            if(fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47 && fechanacAux.length()==8){
-                jfechanac.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
+            if(jfechanac.getText().length()==10 && jfechanac.getText().charAt(2)==47 && jfechanac.getText().charAt(5)==47){
                 fechaSistema();
             }else{
-                if (fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47 && fechanacAux.length()==9){
-                    jfechanac.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
+                String fechanacAux=jfechanac.getText();
+                if(fechanacAux.length()==8 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                    jfechanac.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
                     fechaSistema();
                 }else{
-                    if(fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47 && fechanacAux.length()==9){
-                        jfechanac.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
+                    if (fechanacAux.length()==9 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                        jfechanac.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
                         fechaSistema();
                     }else{
-                        //PARA AÑOS DE DOS DIGITOS
-                        if(fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47 && fechanacAux.length()==6){
-                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
-                            jfechanac.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
+                        if(fechanacAux.length()==9 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                            jfechanac.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
                             fechaSistema();
                         }else{
-                            if(fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47 && fechanacAux.length()==7){
-                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
-                                jfechanac.setText('0' + fechanacAux.substring(0, 5) + año);
+                            //PARA AÑOS DE DOS DIGITOS
+                            if(fechanacAux.length()==6 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
+                                jfechanac.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
                                 fechaSistema();
                             }else{
-                                if(fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47 && fechanacAux.length()==7){
+                                if(fechanacAux.length()==7 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
                                     String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
-                                    jfechanac.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
+                                    jfechanac.setText('0' + fechanacAux.substring(0, 5) + año);
                                     fechaSistema();
                                 }else{
-                                    if(fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47 && fechanacAux.length()==8){
-                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
-                                        jfechanac.setText(fechanacAux.substring(0, 6) + año);
+                                    if(fechanacAux.length()==7 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                        jfechanac.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
                                         fechaSistema();
                                     }else{
-                                      jfechanac.setText("");
+                                        if(fechanacAux.length()==8 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47){
+                                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
+                                            jfechanac.setText(fechanacAux.substring(0, 6) + año);
+                                            fechaSistema();
+                                        }else{
+                                            jfechanac.setText("");
+                                        }
                                     }
                                 }
                             }
@@ -1029,15 +1093,155 @@ public class AltaSocio extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jfechanacFocusLost
+
+    private void jfechanacKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechanacKeyTyped
+        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jfechanacKeyTyped
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        clic = evt.getPoint();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+            // get location of Window
+            int thisX = this.getLocation().x;
+            int thisY = this.getLocation().y;
+
+            // Determine how much the mouse moved since the initial click
+            int xMoved = (thisX + evt.getX()) - (thisX + clic.x);
+            int yMoved = (thisY + evt.getY()) - (thisY + clic.y);
+
+            // Move window to this position
+            int X = thisX + xMoved;
+            int Y = thisY + yMoved;
+            this.setLocation(X, Y);
+    }//GEN-LAST:event_jPanel1MouseDragged
+
+    private void jfechaaltaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechaaltaFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jfechaaltaFocusGained
+
+    private void jfechaaltaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechaaltaFocusLost
+        if (this.jfechaalta.getText().isEmpty()){
+            
+        }else{
+            if(jfechaalta.getText().length()==10 && jfechaalta.getText().charAt(2)==47 && jfechaalta.getText().charAt(5)==47){
+                
+            }else{
+                String fechanacAux=jfechaalta.getText();
+                if(fechanacAux.length()==8 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                    jfechaalta.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
+                }else{
+                    if (fechanacAux.length()==9 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                        jfechaalta.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
+                    }else{
+                        if(fechanacAux.length()==9 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                            jfechaalta.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
+                        }else{
+                            //PARA AÑOS DE DOS DIGITOS
+                            if(fechanacAux.length()==6 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
+                                jfechaalta.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
+                            }else{
+                                if(fechanacAux.length()==7 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                                    String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                    jfechaalta.setText('0' + fechanacAux.substring(0, 5) + año);
+                                }else{
+                                    if(fechanacAux.length()==7 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                        jfechaalta.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
+                                    }else{
+                                        if(fechanacAux.length()==8 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47){
+                                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
+                                            jfechaalta.setText(fechanacAux.substring(0, 6) + año);
+                                        }else{
+                                            jfechaalta.setText("");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jfechaaltaFocusLost
+
+    private void jfechaaltaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechaaltaKeyTyped
+        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jfechaaltaKeyTyped
+
+    private void jfechacoberturaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechacoberturaFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jfechacoberturaFocusGained
+
+    private void jfechacoberturaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechacoberturaFocusLost
+        if (this.jfechacobertura.getText().isEmpty()){
+            
+        }else{
+            if(jfechacobertura.getText().length()==10 && jfechacobertura.getText().charAt(2)==47 && jfechacobertura.getText().charAt(5)==47){
+                
+            }else{
+                String fechanacAux=jfechacobertura.getText();
+                if(fechanacAux.length()==8 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                    jfechacobertura.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, fechanacAux.length()));
+                }else{
+                    if (fechanacAux.length()==9 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                        jfechacobertura.setText('0' + fechanacAux.substring(0, fechanacAux.length()));
+                    }else{
+                        if(fechanacAux.length()==9 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                            jfechacobertura.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3, fechanacAux.length()));
+                        }else{
+                            //PARA AÑOS DE DOS DIGITOS
+                            if(fechanacAux.length()==6 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(3)==47){
+                                String año = this.añoDeCuatroDigitos(fechanacAux.substring(4,6));
+                                jfechacobertura.setText('0' + fechanacAux.substring(0, 2) + '0' + fechanacAux.substring(2, 4) + año);
+                            }else{
+                                if(fechanacAux.length()==7 && fechanacAux.charAt(1)==47 && fechanacAux.charAt(4)==47){
+                                    String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                    jfechacobertura.setText('0' + fechanacAux.substring(0, 5) + año);
+                                }else{
+                                    if(fechanacAux.length()==7 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(4)==47){
+                                        String año = this.añoDeCuatroDigitos(fechanacAux.substring(5,7));
+                                        jfechacobertura.setText(fechanacAux.substring(0, 3) + '0' + fechanacAux.substring(3,5) + año);
+                                    }else{
+                                        if(fechanacAux.length()==8 && fechanacAux.charAt(2)==47 && fechanacAux.charAt(5)==47){
+                                            String año = this.añoDeCuatroDigitos(fechanacAux.substring(6,8));
+                                            jfechacobertura.setText(fechanacAux.substring(0, 6) + año);
+                                        }else{
+                                            jfechacobertura.setText("");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jfechacoberturaFocusLost
+
+    private void jfechacoberturaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jfechacoberturaKeyTyped
+        if (!((evt.getKeyChar()>=48 && evt.getKeyChar()<=57) || evt.getKeyChar()==KeyEvent.VK_SLASH)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jfechacoberturaKeyTyped
+
+    private void jprecio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jprecio1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jprecio1ActionPerformed
     
     private String añoDeCuatroDigitos(String añoDeDos){
-        Date now = new Date();
-        if(Integer.parseInt("20"+añoDeDos)>now.getYear()){
+        if(Integer.parseInt("20"+añoDeDos)>Calendar.getInstance().get(Calendar.YEAR)){
             return "19"+añoDeDos;
         }else{
             return "20"+añoDeDos;
         }
-    }
+    } 
     
     /**
      * @param args the command line arguments
@@ -1092,6 +1296,7 @@ public class AltaSocio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1113,14 +1318,15 @@ public class AltaSocio extends javax.swing.JFrame {
     private javax.swing.JTextField jdireccion;
     private javax.swing.JFormattedTextField jdni;
     private javax.swing.JTextField jedad;
-    private javax.swing.JFormattedTextField jfechaalta;
-    private javax.swing.JFormattedTextField jfechacobertura;
+    private javax.swing.JTextField jfechaalta;
+    private javax.swing.JTextField jfechacobertura;
     private javax.swing.JTextField jfechanac;
     private javax.swing.JComboBox<String> jlocalidad;
     private javax.swing.JTextField jnombre;
     private javax.swing.JTextField jnumeroadherentes;
     private javax.swing.JComboBox<String> jplan;
     private javax.swing.JTextField jprecio;
+    private javax.swing.JTextField jprecio1;
     private javax.swing.JComboBox<String> jsexo;
     private javax.swing.JTextField jtelefono;
     private javax.swing.JComboBox<String> jzona;

@@ -6,6 +6,7 @@
 package tarifa;
 
 import cocheriazurdo.conectar;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,6 +28,8 @@ public class CargarTarifa extends javax.swing.JFrame {
     /**
      * Creates new form CargarTarifa
      */
+    private Point clic;
+    
     public CargarTarifa() {
         initComponents();
         this.setVisible(true);
@@ -53,15 +56,17 @@ public class CargarTarifa extends javax.swing.JFrame {
     
     public void levantarNuevaTarifa(){
         try{
-           PreparedStatement pst = cn.prepareStatement("INSERT INTO bdcocheriazurdo.tarifas VALUES(?,?,?,?)");
+           PreparedStatement pst = cn.prepareStatement("INSERT INTO bdcocheriazurdo.tarifas VALUES(?,?,?,?,?)");
            
            int nrotarifa = Integer.parseInt(jnrotarifa.getText());
            double precio = Double.parseDouble(jprecio.getText());
+           double precioMay = Double.parseDouble(jprecio1.getText());
            
            pst.setInt(1, nrotarifa);
            pst.setString(2, jnombre.getText());
            pst.setDouble(3, precio);
-           pst.setString(4, "ALTA");
+           pst.setDouble(4, precioMay);
+           pst.setString(5, "ALTA");
            pst.executeUpdate();
            
            JOptionPane.showMessageDialog(null,"Tarifa dada de alta con éxito"); 
@@ -100,13 +105,22 @@ public class CargarTarifa extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jprecio1 = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        jprecio2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
         jPanel6.setBackground(new java.awt.Color(55, 64, 70));
         jPanel6.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black, java.awt.Color.black), javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white)));
+        jPanel6.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel6MouseDragged(evt);
+            }
+        });
+        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel6MousePressed(evt);
+            }
+        });
 
         btEXIT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/close-circular-button-of-a-cross (1).png"))); // NOI18N
         btEXIT.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -182,11 +196,6 @@ public class CargarTarifa extends javax.swing.JFrame {
         jnombre.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
 
         jprecio.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jprecio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jprecioActionPerformed(evt);
-            }
-        });
 
         JL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/flecha-hacia-arriba.png"))); // NOI18N
 
@@ -197,8 +206,6 @@ public class CargarTarifa extends javax.swing.JFrame {
 
         jprecio1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
 
-        jprecio2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -206,8 +213,12 @@ public class CargarTarifa extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator3)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jCancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jContinuar))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(JL, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -234,20 +245,13 @@ public class CargarTarifa extends javax.swing.JFrame {
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jLabel19)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel20)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jprecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(331, 331, 331)
-                                .addComponent(jprecio2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 112, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jContinuar)))
+                                .addComponent(jprecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 70, Short.MAX_VALUE))
+                    .addComponent(jSeparator3))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -274,22 +278,20 @@ public class CargarTarifa extends javax.swing.JFrame {
                     .addComponent(jnrotarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18)
                     .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(7, 7, 7)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jprecio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19)
-                    .addComponent(jLabel20)
-                    .addComponent(jprecio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jprecio2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCancelar)
-                    .addComponent(jContinuar))
+                    .addComponent(jContinuar)
+                    .addComponent(jCancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -301,7 +303,7 @@ public class CargarTarifa extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -377,9 +379,24 @@ public class CargarTarifa extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jContinuarKeyPressed
 
-    private void jprecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jprecioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jprecioActionPerformed
+    private void jPanel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MousePressed
+        clic = evt.getPoint();
+    }//GEN-LAST:event_jPanel6MousePressed
+
+    private void jPanel6MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseDragged
+        // get location of Window
+        int thisX = this.getLocation().x;
+        int thisY = this.getLocation().y;
+
+        // Determine how much the mouse moved since the initial click
+        int xMoved = (thisX + evt.getX()) - (thisX + clic.x);
+        int yMoved = (thisY + evt.getY()) - (thisY + clic.y);
+
+        // Move window to this position
+        int X = thisX + xMoved;
+        int Y = thisY + yMoved;
+        this.setLocation(X, Y);
+    }//GEN-LAST:event_jPanel6MouseDragged
 
     /**
      * @param args the command line arguments
@@ -436,7 +453,6 @@ public class CargarTarifa extends javax.swing.JFrame {
     private javax.swing.JTextField jnrotarifa;
     private javax.swing.JTextField jprecio;
     private javax.swing.JTextField jprecio1;
-    private javax.swing.JTextField jprecio2;
     // End of variables declaration//GEN-END:variables
     conectar cc = new conectar();
     Connection cn = cc.ConexionMySql();
