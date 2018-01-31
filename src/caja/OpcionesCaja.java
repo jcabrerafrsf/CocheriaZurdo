@@ -273,7 +273,7 @@ public class OpcionesCaja extends javax.swing.JFrame {
                         .addComponent(jLabel10)
                         .addGap(4, 4, 4)
                         .addComponent(jLabel11)))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -291,8 +291,8 @@ public class OpcionesCaja extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jInformarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jInformarActionPerformed
-        InformarPago IP = new InformarPago();
-        this.dispose();
+//        InformarPago IP = new InformarPago();
+//        this.dispose();
     }//GEN-LAST:event_jInformarActionPerformed
 
     private void btBACKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btBACKMouseClicked
@@ -315,9 +315,9 @@ public class OpcionesCaja extends javax.swing.JFrame {
     }//GEN-LAST:event_btEXITMouseClicked
 
     private void jConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConsultarActionPerformed
-        ConsultarSaldo CS = new ConsultarSaldo();
-        this.dispose();
-        CS.setVisible(true);
+//        ConsultarSaldo CS = new ConsultarSaldo();
+//        this.dispose();
+//        CS.setVisible(true);
     }//GEN-LAST:event_jConsultarActionPerformed
 
     private void jInformarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jInformarKeyPressed

@@ -164,21 +164,21 @@ public class AddAdherenteExito extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AddAdherente ADDH = new AddAdherente();
+        OpcionesAdherente OAH = new OpcionesAdherente();
         this.dispose();    
-        ADDH.setVisible(true);
+        OAH.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        AltaSocio AUS = new AltaSocio();
+        AddAdherente ADA = new AddAdherente();
         this.dispose();    
-        AUS.setVisible(true);
+        ADA.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        ConsultaSocios CUS = new ConsultaSocios();
+        ConsultaDeAdh CDA = new ConsultaDeAdh();
         this.dispose();    
-        CUS.setVisible(true);
+        CDA.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed

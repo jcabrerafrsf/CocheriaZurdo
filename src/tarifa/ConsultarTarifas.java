@@ -47,10 +47,9 @@ public class ConsultarTarifas extends javax.swing.JFrame {
         modelo.addColumn("N° TARIFA");
         modelo.addColumn("NOMBRE");
         modelo.addColumn("PRECIO");
-        modelo.addColumn("MAYOR EDAD");
         modelo.addColumn("ESTADO");
         tbtarifas.setModel(modelo);
-        String datos[] = new String [5];
+        String datos[] = new String [4];
         
         try {
             Statement st = cn.createStatement();
@@ -60,9 +59,7 @@ public class ConsultarTarifas extends javax.swing.JFrame {
                 datos[0] = rs.getString("nro_tarifa");        
                 datos[1] = rs.getString("nombre");
                 datos[2] = rs.getString("precio");
-                datos[3] = rs.getString("precio_mayoredad");
-                datos[4] = rs.getString("estado");
-
+                datos[3] = rs.getString("estado");
                 modelo.addRow(datos);
             }
 
