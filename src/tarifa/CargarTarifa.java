@@ -670,7 +670,7 @@ public class CargarTarifa extends javax.swing.JFrame {
         switch(this.jplan.getSelectedItem().toString()){
             case "Seleccione un plan":
             this.jprecio.setEditable(false);
-            this.jprecio.setText("0");
+            this.jprecio.setText("0.00");
             break;
             
             case "INDIVIDUAL":
