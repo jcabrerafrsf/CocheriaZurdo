@@ -50,17 +50,39 @@ public class EditarTarifa extends javax.swing.JFrame {
         Statement st;
         try {
             st = cn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT nombre, precio, estado FROM bdcocheriazurdo.tarifas WHERE nro_tarifa="+nroTarifa);
-            String datos[] = new String [3];        
+            ResultSet rs = st.executeQuery("SELECT * FROM bdcocheriazurdo.tarifas WHERE nro_tarifa="+nroTarifa);
+            String datos[] = new String [14];        
                 while(rs.next()){
-                        datos[0] = rs.getString("nombre");
-                        datos[1] = rs.getString("precio");
-                        datos[2] = rs.getString("estado");
+                        datos[0] = rs.getString("nro_tarifa");
+                        datos[1] = rs.getString("nombre");
+                        datos[2] = rs.getString("precio");
+                        datos[3] = rs.getString("precio_int1");
+                        datos[4] = rs.getString("precio_int2");
+                        datos[5] = rs.getString("precio_int3");
+                        datos[6] = rs.getString("precio_int4");
+                        datos[7] = rs.getString("precio_int5");
+                        datos[8] = rs.getString("precio_int6");
+                        datos[9] = rs.getString("precio_int7");
+                        datos[10] = rs.getString("precio_int8");
+                        datos[11] = rs.getString("precio_int9");
+                        datos[12] = rs.getString("precio_int10");
+                        datos[13] = rs.getString("estado");
                 }
                 rs.close();
-                jnombre.setText(datos[0]);
-                jprecio.setText(datos[1]);
-                if(datos[2].equals("ALTA")){
+                jnombre.setText(datos[1]);
+                jprecio.setText(datos[2]);
+                //seteo los precios de cada edad
+                jprecio1.setText(datos[3]);
+                jprecio2.setText(datos[4]);
+                jprecio3.setText(datos[5]);
+                jprecio4.setText(datos[6]);
+                jprecio5.setText(datos[7]);
+                jprecio6.setText(datos[8]);
+                jprecio7.setText(datos[9]);
+                jprecio8.setText(datos[10]);
+                jprecio9.setText(datos[11]);
+                jprecio10.setText(datos[12]);
+                if(datos[13].equals("ALTA")){
                     jestado.setSelectedIndex(0);
                 }else{
                     jestado.setSelectedIndex(1);
@@ -99,6 +121,29 @@ public class EditarTarifa extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
         jLabel23 = new javax.swing.JLabel();
         jestado = new javax.swing.JComboBox<>();
+        jSeparator5 = new javax.swing.JSeparator();
+        jSeparator6 = new javax.swing.JSeparator();
+        jLabel25 = new javax.swing.JLabel();
+        jprecio1 = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        jprecio6 = new javax.swing.JTextField();
+        jprecio7 = new javax.swing.JTextField();
+        jprecio8 = new javax.swing.JTextField();
+        jprecio9 = new javax.swing.JTextField();
+        jprecio10 = new javax.swing.JTextField();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jprecio2 = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jprecio3 = new javax.swing.JTextField();
+        jprecio4 = new javax.swing.JTextField();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jprecio5 = new javax.swing.JTextField();
+        jSeparator7 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -223,6 +268,81 @@ public class EditarTarifa extends javax.swing.JFrame {
         jestado.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jestado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ALTA", "BAJA" }));
 
+        jLabel25.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel25.setText("0 a 10 años:  $");
+
+        jprecio1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jprecio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jprecio1ActionPerformed(evt);
+            }
+        });
+
+        jLabel27.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel27.setText("51 a 60 años:  $");
+
+        jprecio6.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+
+        jprecio7.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+
+        jprecio8.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+
+        jprecio9.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+
+        jprecio10.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+
+        jLabel31.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel31.setText("91 a 100 años:  $");
+
+        jLabel30.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel30.setText("81 a 90 años:  $");
+
+        jLabel29.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel29.setText("71 a 80 años:  $");
+
+        jLabel28.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setText("61 a 70 años:  $");
+
+        jprecio2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+
+        jLabel26.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel26.setText("11 a 20 años:  $");
+
+        jLabel24.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setText("21 a 30 años:  $");
+
+        jprecio3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+
+        jprecio4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+
+        jLabel32.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel32.setText("31 a 40 años:  $");
+
+        jLabel33.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel33.setText("41 a 50 años:  $");
+
+        jprecio5.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -230,6 +350,8 @@ public class EditarTarifa extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator5)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(JL, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -244,13 +366,9 @@ public class EditarTarifa extends javax.swing.JFrame {
                                 .addGap(7, 7, 7)
                                 .addComponent(btEXIT))))
                     .addComponent(jSeparator2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jContinuar))
                     .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator4)
+                    .addComponent(jSeparator7)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
@@ -259,19 +377,65 @@ public class EditarTarifa extends javax.swing.JFrame {
                                 .addComponent(jButton1))
                             .addComponent(jLabel18)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(86, 86, 86)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel20)
-                                    .addComponent(jLabel21)
-                                    .addComponent(jLabel22)
-                                    .addComponent(jLabel23))
+                                .addComponent(jLabel20)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jnrotarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel21)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                                        .addComponent(jLabel33)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jprecio5))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                                        .addComponent(jLabel32)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jprecio4))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                                        .addComponent(jLabel24)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jprecio3))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                                            .addGap(8, 8, 8)
+                                            .addComponent(jLabel25)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jprecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                            .addComponent(jLabel26)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jprecio2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(18, 18, 18)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jnrotarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 21, Short.MAX_VALUE)))
+                                    .addComponent(jLabel28)
+                                    .addComponent(jLabel27)
+                                    .addComponent(jLabel29)
+                                    .addComponent(jLabel30)
+                                    .addComponent(jLabel31))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jprecio6, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                                    .addComponent(jprecio7)
+                                    .addComponent(jprecio8)
+                                    .addComponent(jprecio9)
+                                    .addComponent(jprecio10)))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel23)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 26, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jCancelar)
+                        .addGap(9, 9, 9)
+                        .addComponent(jContinuar)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -304,27 +468,62 @@ public class EditarTarifa extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jnrotarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20)
-                    .addComponent(jnrotarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel21)
+                    .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21))
+                    .addComponent(jLabel22)
+                    .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22))
+                    .addComponent(jLabel25)
+                    .addComponent(jprecio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27)
+                    .addComponent(jprecio6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(jprecio2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel28)
+                    .addComponent(jprecio7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(jprecio3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel29)
+                    .addComponent(jprecio8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel32)
+                    .addComponent(jprecio4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel30)
+                    .addComponent(jprecio9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel33)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jprecio5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel31)
+                        .addComponent(jprecio10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
                     .addComponent(jestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jContinuar)
-                    .addComponent(jCancelar))
+                    .addComponent(jCancelar)
+                    .addComponent(jContinuar))
                 .addContainerGap())
         );
 
@@ -369,7 +568,7 @@ public class EditarTarifa extends javax.swing.JFrame {
         if(seleccion==0){
 
             try{
-                PreparedStatement pst = cn.prepareStatement("UPDATE bdcocheriazurdo.tarifas SET nombre='"+jnombre.getText()+"', precio="+jprecio.getText()+", estado='"+jestado.getSelectedItem().toString()+"' WHERE nro_tarifa=?;");                                           
+                PreparedStatement pst = cn.prepareStatement("UPDATE bdcocheriazurdo.tarifas SET nombre='"+jnombre.getText()+"', precio="+jprecio.getText()+", precio_int1="+jprecio1.getText()+", precio_int2="+jprecio2.getText()+", precio_int3="+jprecio3.getText()+", precio_int4="+jprecio4.getText()+", precio_int5="+jprecio5.getText()+", precio_int6="+jprecio6.getText()+", precio_int7="+jprecio7.getText()+", precio_int8="+jprecio8.getText()+", precio_int9="+jprecio9.getText()+", precio_int10="+jprecio10.getText()+", estado='"+jestado.getSelectedItem().toString()+"' WHERE nro_tarifa=?;");                                           
                 Integer nTarifa = Integer.valueOf(jnrotarifa.getText());
                 pst.setInt(1, nTarifa);
                 pst.executeUpdate();
@@ -405,10 +604,10 @@ public class EditarTarifa extends javax.swing.JFrame {
     private void jContinuarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jContinuarKeyPressed
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             int seleccion = JOptionPane.showConfirmDialog(null, "Realmente desea editar la tarifa?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if(seleccion==0){
+        if(seleccion==0){
 
             try{
-                PreparedStatement pst = cn.prepareStatement("UPDATE bdcocheriazurdo.tarifas SET nombre='"+jnombre.getText()+"', precio="+jprecio.getText()+" WHERE nro_tarifa=?;");                                           
+                PreparedStatement pst = cn.prepareStatement("UPDATE bdcocheriazurdo.tarifas SET nombre='"+jnombre.getText()+"', precio="+jprecio.getText()+", precio_mayoredad="+jprecio1.getText()+", estado='"+jestado.getSelectedItem().toString()+"' WHERE nro_tarifa=?;");                                           
                 Integer nTarifa = Integer.valueOf(jnrotarifa.getText());
                 pst.setInt(1, nTarifa);
                 pst.executeUpdate();
@@ -417,6 +616,7 @@ public class EditarTarifa extends javax.swing.JFrame {
 
                 Tarifas TF = new Tarifas();
                 this.dispose();
+                TF.setVisible(true);
 
             }catch(NumberFormatException | SQLException e){
                System.out.println(e.getMessage());
@@ -463,6 +663,10 @@ public class EditarTarifa extends javax.swing.JFrame {
         int Y = thisY + yMoved;
         this.setLocation(X, Y);
     }//GEN-LAST:event_jPanel6MouseDragged
+
+    private void jprecio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jprecio1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jprecio1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -514,15 +718,38 @@ public class EditarTarifa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JComboBox<String> jestado;
     private javax.swing.JTextField jnombre;
     private javax.swing.JTextField jnrotarifa;
     private javax.swing.JTextField jprecio;
+    private javax.swing.JTextField jprecio1;
+    private javax.swing.JTextField jprecio10;
+    private javax.swing.JTextField jprecio2;
+    private javax.swing.JTextField jprecio3;
+    private javax.swing.JTextField jprecio4;
+    private javax.swing.JTextField jprecio5;
+    private javax.swing.JTextField jprecio6;
+    private javax.swing.JTextField jprecio7;
+    private javax.swing.JTextField jprecio8;
+    private javax.swing.JTextField jprecio9;
     // End of variables declaration//GEN-END:variables
     conectar cc = new conectar();
     Connection cn = cc.ConexionMySql();

@@ -60,7 +60,6 @@ public class ConsultarTarifas extends javax.swing.JFrame {
                 datos[1] = rs.getString("nombre");
                 datos[2] = rs.getString("precio");
                 datos[3] = rs.getString("estado");
-
                 modelo.addRow(datos);
             }
 
