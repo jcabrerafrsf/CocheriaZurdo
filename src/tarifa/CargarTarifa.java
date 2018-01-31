@@ -668,7 +668,17 @@ public class CargarTarifa extends javax.swing.JFrame {
 
     private void jplanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jplanItemStateChanged
         switch(this.jplan.getSelectedItem().toString()){
+            case "Seleccione un plan":
+            this.jprecio.setEditable(false);
+            this.jprecio.setText("0.00");
+            break;
+            
             case "INDIVIDUAL":
+            this.jprecio.setEditable(false);
+            this.jprecio.setText("0");
+            break;
+            
+            case "TITULAR Y ADHERENTE":
             this.jprecio.setEditable(false);
             this.jprecio.setText("0");
             break;
