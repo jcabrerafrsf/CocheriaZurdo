@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import socio.OpcionesSocio;
 
 /**
  *
@@ -36,7 +37,8 @@ public class AltaAdherente extends javax.swing.JFrame {
     int nro_del_socio;
     int cantadh;
     int cantsc;
-    Double precioMayEd;
+    int codigo_tarifa;
+    Boolean flag;
     private Point clic;
     
     public AltaAdherente() {
@@ -97,7 +99,69 @@ public class AltaAdherente extends javax.swing.JFrame {
         this.jfechacobertura.setText(fechaSys.getFechaCobertura(fecha,fecha2));
     }
     
-    
+    public void cargarDatos(){
+        
+        
+        cantidadadh--;
+                   
+        try{
+        PreparedStatement pst = cn.prepareStatement("INSERT INTO bdcocheriazurdo.adherentes VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT MAX(nro_adherente) FROM bdcocheriazurdo.adherentes");
+            rs.last();
+            cantadh = rs.getInt("MAX(nro_adherente)");
+            }catch (SQLException ex) {
+            Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
+            }        
+            
+            try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT MAX(nro_socio) FROM bdcocheriazurdo.socios");
+            rs.last();
+            cantsc = rs.getInt("MAX(nro_socio)");
+            }catch (SQLException ex) {
+            Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
+            }     
+            
+            try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT MAX(nro_socio), codigo_tarifa FROM bdcocheriazurdo.socios");
+            rs.last();
+            codigo_tarifa = rs.getInt("codigo_tarifa");
+            }catch (SQLException ex) {
+            Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            pst.setInt(1,cantadh+1);
+            pst.setInt(2, this.nro_del_socio);
+            pst.setString(3, this.japellido.getText().toUpperCase());
+            pst.setString(4, this.jnombre.getText().toUpperCase());
+            pst.setString(5, this.jdni.getText().toUpperCase());
+            pst.setString(6, this.jdireccion.getText().toUpperCase());
+            pst.setString(7, this.jtelefono.getText().toUpperCase());
+            pst.setString(8, getSexo());        
+            pst.setString(9, this.jfechanac.getText());
+            pst.setString(10, this.jfechaalta.getText());
+            pst.setString(11, this.jfechacobertura.getText());
+            pst.setDouble(12, this.codigo_tarifa);
+            pst.setString(13, "ALTA");
+            pst.executeUpdate();
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,"Error en la conexion o DNI duplicado - "+e.getMessage());
+        }
+        
+        //PREGUNTA SI EXISTE ALGÚN ADH MAS PARA CARGAR
+        if(cantidadadh!=0){
+            AltaAdherente AH1 = new AltaAdherente(cantidadadh, nro_del_socio);
+            this.dispose();            
+        }else{
+            AltaSocioYAdhExito AUE = new AltaSocioYAdhExito();
+            this.dispose();     
+        }
+       
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -498,88 +562,7 @@ public class AltaAdherente extends javax.swing.JFrame {
 
     private void CONTINUARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CONTINUARActionPerformed
        
-        cantidadadh--;
-                   
-        try{
-        PreparedStatement pst = cn.prepareStatement("INSERT INTO bdcocheriazurdo.adherentes VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
-            try {
-            Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT MAX(nro_adherente) FROM bdcocheriazurdo.adherentes");
-            rs.last();
-            cantadh = rs.getInt("MAX(nro_adherente)");
-            }catch (SQLException ex) {
-            Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
-            }        
-            
-            try {
-            Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT MAX(nro_socio) FROM bdcocheriazurdo.socios");
-            rs.last();
-            cantsc = rs.getInt("MAX(nro_socio)");
-            }catch (SQLException ex) {
-            Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
-            }     
-            
-        
-        //VERIFICO SI ES MAYOR DE EDAD PARA INCREMENTAR TARIFA
-        int edad = Integer.parseInt(jedad.getText());
-        if(edad>=21){
-            JOptionPane.showMessageDialog(null,"Adherente mayor de edad, se incrementará tarifa adicional");
-            try {
-            Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT precio FROM bdcocheriazurdo.tarifas WHERE nombre='MAYOR EDAD'");
-            rs.last();
-            precioMayEd = rs.getDouble("precio");
-            }catch (SQLException ex) {
-            Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            pst.setInt(1,cantadh+1);
-            pst.setInt(2, this.nro_del_socio);
-            pst.setString(3, this.japellido.getText().toUpperCase());
-            pst.setString(4, this.jnombre.getText().toUpperCase());
-            pst.setString(5, this.jdni.getText().toUpperCase());
-            pst.setString(6, this.jdireccion.getText().toUpperCase());
-            pst.setString(7, this.jtelefono.getText().toUpperCase());
-            pst.setString(8, getSexo());        
-            pst.setString(9, this.jfechanac.getText());
-            pst.setString(10, this.jfechaalta.getText());
-            pst.setString(11, this.jfechacobertura.getText());
-            pst.setDouble(12, this.precioMayEd);
-            pst.setString(13, "ALTA");
-            pst.executeUpdate();
-            
-        }else{
-            pst.setInt(1,cantadh+1);
-            pst.setInt(2, this.nro_del_socio);
-            pst.setString(3, this.japellido.getText().toUpperCase());
-            pst.setString(4, this.jnombre.getText().toUpperCase());
-            pst.setString(5, this.jdni.getText().toUpperCase());
-            pst.setString(6, this.jdireccion.getText().toUpperCase());
-            pst.setString(7, this.jtelefono.getText().toUpperCase());
-            pst.setString(8, getSexo());        
-            pst.setString(9, this.jfechanac.getText());
-            pst.setString(10, this.jfechaalta.getText());
-            pst.setString(11, this.jfechacobertura.getText());
-            pst.setDouble(12, 0.0);
-            pst.setString(13, "ALTA");
-            pst.executeUpdate();
-        }
-
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error en la conexion o DNI duplicado - "+e.getMessage());
-        }
-        
-        //PREGUNTA SI EXISTE ALGUN ADH MAS PARA CARGAR
-        if(cantidadadh!=0){
-            AltaAdherente AH1 = new AltaAdherente(cantidadadh, nro_del_socio);
-            this.dispose();            
-        }else{
-            AltaSocioYAdhExito AUE = new AltaSocioYAdhExito();
-            this.dispose();     
-        }
-        
-        
+        cargarDatos();       
        
     }//GEN-LAST:event_CONTINUARActionPerformed
 

@@ -38,6 +38,7 @@ public class AddAdherente extends javax.swing.JFrame {
     int cantadh=0;
     String nrodeadhs="";
     int jnsocio=0;
+    int cod_tarifa=0;
     int existesocio=0;
     int numerosocio=0;
     private Point clic;
@@ -520,12 +521,24 @@ public class AddAdherente extends javax.swing.JFrame {
             else{
               
                 try{
-                    PreparedStatement pst = cn.prepareStatement("INSERT INTO bdcocheriazurdo.adherentes VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
+                    PreparedStatement pst = cn.prepareStatement("INSERT INTO bdcocheriazurdo.adherentes VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                        
+                    //NRO MÁXIMO PARA AUTOINCREMENT
                         try {
                             Statement st = cn.createStatement();
                             ResultSet rs = st.executeQuery("SELECT MAX(nro_adherente) FROM bdcocheriazurdo.adherentes");
                             rs.last();
                             cantadh = rs.getInt("MAX(nro_adherente)");
+                        }catch (SQLException ex) {
+                            Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                    //CÓDIGO DE LA TARIFA    
+                        try {
+                            Statement st = cn.createStatement();
+                            ResultSet rs = st.executeQuery("SELECT codigo_tarifa FROM bdcocheriazurdo.socios WHERE nro_socio="+this.jnsocio);
+                            rs.last();
+                            cod_tarifa = rs.getInt("codigo_tarifa");
                         }catch (SQLException ex) {
                             Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -541,7 +554,8 @@ public class AddAdherente extends javax.swing.JFrame {
                     pst.setString(9, this.jfechanac.getText());
                     pst.setString(10, this.jfechaalta.getText());
                     pst.setString(11, this.jfechacobertura.getText());
-                    pst.setString(12, "ALTA");
+                    pst.setInt(12, this.cod_tarifa);
+                    pst.setString(13, "ALTA");
                     pst.executeUpdate();
                     
                     //INCREMENTO EL NRO DE ADHERENTES DEL SOCIO
@@ -564,7 +578,6 @@ public class AddAdherente extends javax.swing.JFrame {
                         pst2.setString(1, nrodeadhs);
                         pst2.executeUpdate();
                         pst2.close();
-                        System.out.println("todo barbarrrrrrrrrrrrrrrrrrrrro:  "+nrodeadhs);
                         
                         
                     }catch (SQLException ex) {
