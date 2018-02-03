@@ -13,6 +13,7 @@ import java.util.Calendar;
 import javax.swing.JOptionPane;
 import java.util.Date;
 import java.util.logging.*;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import tarifa.ConsTarParaAltaSocio;
 
@@ -25,15 +26,15 @@ public class AltaSocio extends javax.swing.JFrame {
         this.setVisible(true);
         setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage());
         setLocationRelativeTo(null);
-        cargarTarifas();
+        jcodigotarifa.addItem("Seleccione una tarifa");
         this.jnumeroadherentes.setText("0");
     }
     
     public void setPrecio(){
-        
+
         String datos[] = new String [1];
         String nombreTarifa = jcodigotarifa.getSelectedItem().toString();
-        
+
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery("SELECT precio FROM bdcocheriazurdo.tarifas WHERE nombre="+"'"+nombreTarifa+"'");
@@ -41,27 +42,25 @@ public class AltaSocio extends javax.swing.JFrame {
             while(rs.next()){
                 datos[0] = rs.getString("precio");  
             }
-    
+
             jprecio.setText(datos[0]);            
 
         } catch (SQLException ex) {
             Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
     }
     
     public void cargarTarifas(){
-        
-        jcodigotarifa.getSelectedIndex();
+
+        int plan = jplan.getSelectedIndex()+1;
         
         String datos[] = new String [1];
-        jcodigotarifa.addItem("Seleccionar item");
         
         try {
             Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT nombre FROM bdcocheriazurdo.tarifas WHERE estado='ALTA'");
-            
+            ResultSet rs = st.executeQuery("SELECT nombre FROM bdcocheriazurdo.tarifas WHERE estado='ALTA' AND plan="+plan);
+            //SE CARGA DOS VECES NO SE POR QUÉ
             while(rs.next()){
                 datos[0] = rs.getString("nombre");        
                 jcodigotarifa.addItem(datos[0]);
@@ -373,6 +372,11 @@ public class AltaSocio extends javax.swing.JFrame {
                 jplanItemStateChanged(evt);
             }
         });
+        jplan.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jplanFocusLost(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(240, 240, 240));
@@ -486,15 +490,8 @@ public class AltaSocio extends javax.swing.JFrame {
             }
         });
         jcodigotarifa.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jcodigotarifaFocusLost(evt);
-            }
-        });
-        jcodigotarifa.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-                jcodigotarifaCaretPositionChanged(evt);
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jcodigotarifaFocusGained(evt);
             }
         });
 
@@ -825,16 +822,31 @@ public class AltaSocio extends javax.swing.JFrame {
     }//GEN-LAST:event_btcargarKeyPressed
 
     private void jplanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jplanItemStateChanged
-        switch(this.jplan.getSelectedItem().toString()){
-            case "INDIVIDUAL": 
+        switch(this.jplan.getSelectedIndex()){
+            case 0: 
                 this.jnumeroadherentes.setText("0");
                 this.jnumeroadherentes.setEditable(false);
                 break;
             
-            case "TITULAR Y ADHERENTE":
+            case 1:
                 this.jnumeroadherentes.setText("1");
-                this.jnumeroadherentes.setEditable(false);
+                this.jnumeroadherentes.setEditable(false);                
                 break;
+                
+            case 2:
+                this.jnumeroadherentes.setText("2");
+                this.jnumeroadherentes.setEditable(true);             
+                break;
+            
+            case 3:
+                this.jnumeroadherentes.setText("2");
+                this.jnumeroadherentes.setEditable(true);            
+                break;    
+            
+            case 4:
+                this.jnumeroadherentes.setText("2");
+                this.jnumeroadherentes.setEditable(true);                
+                break;       
                 
             default: 
                 this.jnumeroadherentes.setEditable(true);
@@ -1047,14 +1059,6 @@ public class AltaSocio extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btEXITMouseClicked
-
-    private void jcodigotarifaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcodigotarifaFocusLost
-        setPrecio();
-    }//GEN-LAST:event_jcodigotarifaFocusLost
-
-    private void jcodigotarifaCaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jcodigotarifaCaretPositionChanged
-        setPrecio();
-    }//GEN-LAST:event_jcodigotarifaCaretPositionChanged
 
     private void jcodigotarifaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcodigotarifaItemStateChanged
         setPrecio();
@@ -1272,6 +1276,14 @@ public class AltaSocio extends javax.swing.JFrame {
         OpcionesSocio OS = new OpcionesSocio();
         this.dispose();
     }//GEN-LAST:event_btBACK1MouseClicked
+
+    private void jcodigotarifaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcodigotarifaFocusGained
+        cargarTarifas();
+    }//GEN-LAST:event_jcodigotarifaFocusGained
+
+    private void jplanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jplanFocusLost
+        cargarTarifas();
+    }//GEN-LAST:event_jplanFocusLost
     
     private String añoDeCuatroDigitos(String añoDeDos){
         if(Integer.parseInt("20"+añoDeDos)>Calendar.getInstance().get(Calendar.YEAR)){
