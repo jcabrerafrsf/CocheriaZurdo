@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tarifa;
+package zonas;
 
+import tarifa.*;
 import cocheriazurdo.conectar;
 import java.awt.Point;
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import socio.ConsultaSocios;
 
@@ -25,9 +27,10 @@ import socio.ConsultaSocios;
 public class ConsTarParaEditar extends javax.swing.JFrame {
 
     /**
-     * Creates new form ConsTarParaEditar
+     * Creates new form ConsultarTarifas
      */
     private Point clic;
+    
     
     public ConsTarParaEditar() {
         initComponents();
@@ -44,22 +47,24 @@ public class ConsTarParaEditar extends javax.swing.JFrame {
                 return false;
         }
         };
-        modelo.addColumn("N° TARIFA");
+        modelo.addColumn("N° ZONA");
         modelo.addColumn("NOMBRE");
-        modelo.addColumn("PRECIO");
+        modelo.addColumn("COBRADOR");
+        modelo.addColumn("RECAUDADO");
         modelo.addColumn("ESTADO");
-        tbtarifas.setModel(modelo);
-        String datos[] = new String [6];
+        tbzonas.setModel(modelo);
+        String datos[] = new String [5];
         
         try {
             Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM bdcocheriazurdo.tarifas");
+            ResultSet rs = st.executeQuery("SELECT * FROM bdcocheriazurdo.zonas");
             
             while(rs.next()){
-                datos[0] = rs.getString("nro_tarifa");        
+                datos[0] = rs.getString("nro_zona");        
                 datos[1] = rs.getString("nombre");
-                datos[2] = rs.getString("precio");
-                datos[3] = rs.getString("estado");
+                datos[2] = rs.getString("cobrador");
+                datos[3] = rs.getString("recaudado");
+                datos[4] = rs.getString("estado");
                 modelo.addRow(datos);
             }
 
@@ -68,6 +73,9 @@ public class ConsTarParaEditar extends javax.swing.JFrame {
         }        
     }
     
+    public JTable getTbzonas(){
+        return this.tbzonas;
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -79,14 +87,11 @@ public class ConsTarParaEditar extends javax.swing.JFrame {
         btBACK = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbtarifas = new javax.swing.JTable();
+        tbzonas = new javax.swing.JTable();
         jSeparator2 = new javax.swing.JSeparator();
-        jContinuar = new javax.swing.JButton();
-        jnrotarifa = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
-        jCancelar = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -104,21 +109,21 @@ public class ConsTarParaEditar extends javax.swing.JFrame {
             }
         });
 
-        btEXIT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/close-circular-button-of-a-cross (1).png"))); // NOI18N
+        btEXIT.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\close-circular-button-of-a-cross (1).png")); // NOI18N
         btEXIT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btEXITMouseClicked(evt);
             }
         });
 
-        btMINIMIZAR1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/minus-sign-in-a-circle (1).png"))); // NOI18N
+        btMINIMIZAR1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\minus-sign-in-a-circle (1).png")); // NOI18N
         btMINIMIZAR1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btMINIMIZAR1MouseClicked(evt);
             }
         });
 
-        btBACK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/back-arrow-circular-symbol (1).png"))); // NOI18N
+        btBACK.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\back-arrow-circular-symbol (1).png")); // NOI18N
         btBACK.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btBACKMouseClicked(evt);
@@ -127,11 +132,11 @@ public class ConsTarParaEditar extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("CONSULTA DE TARIFAS");
+        jLabel2.setText("CONSULTA DE ZONAS");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/busqueda24.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/busqueda32.png"))); // NOI18N
 
-        tbtarifas.setModel(new javax.swing.table.DefaultTableModel(
+        tbzonas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -139,53 +144,14 @@ public class ConsTarParaEditar extends javax.swing.JFrame {
 
             }
         ));
-        tbtarifas.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                tbtarifasFocusGained(evt);
-            }
-        });
-        tbtarifas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbtarifasMouseClicked(evt);
-            }
-        });
-        tbtarifas.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-                tbtarifasCaretPositionChanged(evt);
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-            }
-        });
-        jScrollPane1.setViewportView(tbtarifas);
+        jScrollPane1.setViewportView(tbzonas);
 
-        jContinuar.setBackground(new java.awt.Color(153, 255, 153));
-        jContinuar.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jContinuar.setText("CONTINUAR");
-        jContinuar.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setBackground(new java.awt.Color(153, 255, 153));
+        jButton2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jButton2.setText("CONTINUAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jContinuarActionPerformed(evt);
-            }
-        });
-
-        jnrotarifa.setEditable(false);
-        jnrotarifa.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jnrotarifa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jnrotarifaActionPerformed(evt);
-            }
-        });
-
-        jLabel20.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("N° DE TARIFA A EDITAR:");
-
-        jCancelar.setBackground(new java.awt.Color(255, 153, 153));
-        jCancelar.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jCancelar.setText("CANCELAR");
-        jCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCancelarActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -196,28 +162,24 @@ public class ConsTarParaEditar extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btBACK)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btMINIMIZAR1)
-                        .addGap(7, 7, 7)
-                        .addComponent(btEXIT))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btBACK)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btMINIMIZAR1)
+                                .addGap(7, 7, 7)
+                                .addComponent(btEXIT))
+                            .addComponent(jSeparator3)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel20)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jnrotarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jContinuar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCancelar)))
+                        .addComponent(jButton2)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -225,23 +187,21 @@ public class ConsTarParaEditar extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(btBACK)
-                    .addComponent(btMINIMIZAR1)
-                    .addComponent(btEXIT))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(btBACK)
+                            .addComponent(btMINIMIZAR1)
+                            .addComponent(btEXIT))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jContinuar)
-                    .addComponent(jnrotarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20)
-                    .addComponent(jCancelar))
+                .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -272,48 +232,15 @@ public class ConsTarParaEditar extends javax.swing.JFrame {
     }//GEN-LAST:event_btMINIMIZAR1MouseClicked
 
     private void btBACKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btBACKMouseClicked
-        Tarifas TF = new Tarifas();
+        Zonas z = new Zonas();
         this.dispose();
-        TF.setVisible(true);
+        z.setVisible(true);
     }//GEN-LAST:event_btBACKMouseClicked
 
-    private void tbtarifasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tbtarifasFocusGained
-        int indice = tbtarifas.getSelectedRow();
-        indice++;
-        jnrotarifa.setText(Integer.toString(indice));
-    }//GEN-LAST:event_tbtarifasFocusGained
-
-    private void tbtarifasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbtarifasMouseClicked
-        int indice = tbtarifas.getSelectedRow();
-        indice++;
-        jnrotarifa.setText(Integer.toString(indice));
-    }//GEN-LAST:event_tbtarifasMouseClicked
-
-    private void tbtarifasCaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_tbtarifasCaretPositionChanged
-        int indice = tbtarifas.getSelectedRow();
-        indice++;
-        jnrotarifa.setText(Integer.toString(indice));
-    }//GEN-LAST:event_tbtarifasCaretPositionChanged
-
-    private void jContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jContinuarActionPerformed
-        if(jnrotarifa.getText().isEmpty() || jnrotarifa.getText().equals("0")){
-            JOptionPane.showMessageDialog(null,"Se debe especificar un N° de tarifa");
-        }else{
-            EditarTarifa ED = new EditarTarifa(jnrotarifa.getText());
-            this.dispose();
-            ED.setVisible(true);
-        }
-    }//GEN-LAST:event_jContinuarActionPerformed
-
-    private void jCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelarActionPerformed
-        Tarifas TF = new Tarifas();
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        EditarZona ez = new EditarZona (this.tbzonas.getSelectedRow()+1);
         this.dispose();
-        TF.setVisible(true);
-    }//GEN-LAST:event_jCancelarActionPerformed
-
-    private void jnrotarifaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jnrotarifaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jnrotarifaActionPerformed
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jPanel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MousePressed
         clic = evt.getPoint();
@@ -360,6 +287,13 @@ public class ConsTarParaEditar extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ConsTarParaEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -373,17 +307,14 @@ public class ConsTarParaEditar extends javax.swing.JFrame {
     private javax.swing.JLabel btBACK;
     private javax.swing.JLabel btEXIT;
     private javax.swing.JLabel btMINIMIZAR1;
-    private javax.swing.JButton jCancelar;
-    private javax.swing.JButton jContinuar;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jnrotarifa;
-    private javax.swing.JTable tbtarifas;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JTable tbzonas;
     // End of variables declaration//GEN-END:variables
     conectar cc = new conectar();
     Connection cn = cc.ConexionMySql();
