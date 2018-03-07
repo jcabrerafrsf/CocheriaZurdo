@@ -36,6 +36,7 @@ public class CargarTarifa extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage());
         this.setLocationRelativeTo(null);
         jprecio.setEditable(false);
+        this.text.setVisible(false);
         cargarMaxTarifa(); 
     }
 
@@ -88,7 +89,7 @@ public class CargarTarifa extends javax.swing.JFrame {
            double precio_int10 = Double.parseDouble(jprecio10.getText());
            
            pst.setInt(1, nrotarifa);
-           pst.setString(2, jnombre.getText());
+           pst.setString(2, jnombre.getText().toUpperCase());
            pst.setDouble(3, precio);
            pst.setDouble(4, precio_int1);
            pst.setDouble(5, precio_int2);
@@ -134,7 +135,7 @@ public class CargarTarifa extends javax.swing.JFrame {
         jnombre = new javax.swing.JTextField();
         jprecio1 = new javax.swing.JTextField();
         JL = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
+        text = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jprecio = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
@@ -257,10 +258,10 @@ public class CargarTarifa extends javax.swing.JFrame {
 
         JL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/flecha-hacia-arriba.png"))); // NOI18N
 
-        jLabel20.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("Abarca el titular y el primer adherente");
+        text.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        text.setForeground(new java.awt.Color(255, 255, 255));
+        text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        text.setText("Abarca el titular y el primer adherente");
 
         jLabel21.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
@@ -450,7 +451,7 @@ public class CargarTarifa extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel20))
+                                .addComponent(text))
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
@@ -497,7 +498,7 @@ public class CargarTarifa extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
                     .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20))
+                    .addComponent(text))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -671,21 +672,25 @@ public class CargarTarifa extends javax.swing.JFrame {
             case "Seleccione un plan":
             this.jprecio.setEditable(false);
             this.jprecio.setText("0.00");
+            this.text.setVisible(false);
             break;
             
             case "INDIVIDUAL":
             this.jprecio.setEditable(false);
             this.jprecio.setText("0");
+            this.text.setVisible(false);
             break;
             
             case "TITULAR Y ADHERENTE":
             this.jprecio.setEditable(false);
             this.jprecio.setText("0");
+            this.text.setVisible(false);
             break;
 
             default:
             this.jprecio.setEditable(true);
             this.jprecio.setText("0.00");
+            this.text.setVisible(true);
         }
     }//GEN-LAST:event_jplanItemStateChanged
 
@@ -739,7 +744,6 @@ public class CargarTarifa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
@@ -772,6 +776,7 @@ public class CargarTarifa extends javax.swing.JFrame {
     private javax.swing.JTextField jprecio7;
     private javax.swing.JTextField jprecio8;
     private javax.swing.JTextField jprecio9;
+    private javax.swing.JLabel text;
     // End of variables declaration//GEN-END:variables
     conectar cc = new conectar();
     Connection cn = cc.ConexionMySql();

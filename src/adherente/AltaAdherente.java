@@ -562,8 +562,8 @@ public class AltaAdherente extends javax.swing.JFrame {
 
     private void CONTINUARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CONTINUARActionPerformed
        
-        cargarDatos();       
-       
+        cargarDatos();
+  
     }//GEN-LAST:event_CONTINUARActionPerformed
 
     private void jnrosocioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jnrosocioFocusGained
@@ -603,7 +603,7 @@ public class AltaAdherente extends javax.swing.JFrame {
     private void jtelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtelefonoKeyTyped
         if(((evt.getKeyChar()>=48) && (evt.getKeyChar()<=57)) || (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE)){
             int cont = jtelefono.getText().length();
-            if (cont>=10){
+            if (cont>=20){
                 if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE)
                 cont--;
                 else

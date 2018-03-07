@@ -335,7 +335,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="ESCOJA UNA ZONA:"/>
+            <Property name="text" type="java.lang.String" value="ZONA:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jzona">

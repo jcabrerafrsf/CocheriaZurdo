@@ -178,7 +178,7 @@ public class EliminarZona extends javax.swing.JFrame {
         jLabel20.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("ESCOJA UNA ZONA:");
+        jLabel20.setText("ZONA:");
 
         jzona.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jzona.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));

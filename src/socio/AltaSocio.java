@@ -20,20 +20,23 @@ import tarifa.ConsTarParaAltaSocio;
 public class AltaSocio extends javax.swing.JFrame {
 
     private Point clic;
+    int nro_socio=0;
+    int codigotarifa=0;
+    
     
     public AltaSocio() {
         initComponents(); 
         this.setVisible(true);
         setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage());
         setLocationRelativeTo(null);
-        jcodigotarifa.addItem("Seleccione una tarifa");
+        cargarTarifas();
         this.jnumeroadherentes.setText("0");
     }
     
     public void setPrecio(){
 
         String datos[] = new String [1];
-        String nombreTarifa = jcodigotarifa.getSelectedItem().toString();
+        String nombreTarifa = nombretarifa.getText();
 
         try {
             Statement st = cn.createStatement();
@@ -48,31 +51,30 @@ public class AltaSocio extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
     
     public void cargarTarifas(){
+        
 
-        int plan = jplan.getSelectedIndex()+1;
+            int plan = jplan.getSelectedIndex()+1;
         
-        String datos[] = new String [1];
-        
-        try {
-            Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT nombre FROM bdcocheriazurdo.tarifas WHERE estado='ALTA' AND plan="+plan);
-            //SE CARGA DOS VECES NO SE POR QUÉ
-            while(rs.next()){
-                datos[0] = rs.getString("nombre");        
-                jcodigotarifa.addItem(datos[0]);
-            }
-            
-            jcodigotarifa.removeItem("");
+            plan = 3;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
-        }     
-        
-        
+            String datos[] = new String [50];
+
+            try {
+                Statement st = cn.createStatement();
+                ResultSet rs = st.executeQuery("SELECT nombre FROM bdcocheriazurdo.tarifas WHERE estado='ALTA' AND plan="+plan);
+                //SE CARGA DOS VECES NO SE POR QUÉ
+                while(rs.next()){
+                    datos[0] = rs.getString("nombre");        
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
     }
     
     public void fechaSistema(){
@@ -107,6 +109,7 @@ public class AltaSocio extends javax.swing.JFrame {
      public void cargaDatos(){
        
        int cantsocios=0;
+       
        //CONSIGO EL NRO_SOCIO MAS GRANDE ASI LUEGO INCREMENTO
        try{
         PreparedStatement pst = cn.prepareStatement("INSERT INTO bdcocheriazurdo.socios VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -117,7 +120,8 @@ public class AltaSocio extends javax.swing.JFrame {
             cantsocios = rs.getInt("MAX(nro_socio)");
             }catch (SQLException ex) {
             Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            }
+        nro_socio = cantsocios+1;
         pst.setInt(1,cantsocios+1);
         pst.setInt(2, this.jzona.getSelectedIndex()+1);
         pst.setString(3, this.jnombre.getText().toUpperCase());
@@ -128,7 +132,7 @@ public class AltaSocio extends javax.swing.JFrame {
         pst.setString(8, getSexo());
         pst.setString(9, getLocalidad());
         pst.setString(10, getPlan());
-        pst.setInt(11, this.jcodigotarifa.getSelectedIndex());
+        pst.setInt(11, Integer.valueOf(this.codigo_tar.getText()));
         pst.setString(12, this.jcodigoobrasocial.getText().toUpperCase());
         pst.setString(13, this.jfechanac.getText().toUpperCase());
         pst.setString(14, this.jfechaalta.getText().toUpperCase());
@@ -263,7 +267,6 @@ public class AltaSocio extends javax.swing.JFrame {
         jSeparator7 = new javax.swing.JSeparator();
         jSeparator8 = new javax.swing.JSeparator();
         jSeparator9 = new javax.swing.JSeparator();
-        jcodigotarifa = new javax.swing.JComboBox<>();
         jfechanac = new javax.swing.JTextField();
         jfechaalta = new javax.swing.JTextField();
         jfechacobertura = new javax.swing.JTextField();
@@ -271,6 +274,12 @@ public class AltaSocio extends javax.swing.JFrame {
         btMINIMIZAR1 = new javax.swing.JLabel();
         btBACK1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        botontarifas = new javax.swing.JButton();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        codetarifa = new javax.swing.JTextField();
+        nombretarifa = new javax.swing.JTextField();
+        codigo_tar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INGRESO DE NUEVO SOCIO");
@@ -372,11 +381,6 @@ public class AltaSocio extends javax.swing.JFrame {
                 jplanItemStateChanged(evt);
             }
         });
-        jplan.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jplanFocusLost(evt);
-            }
-        });
 
         jLabel10.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(240, 240, 240));
@@ -463,7 +467,7 @@ public class AltaSocio extends javax.swing.JFrame {
 
         jLabel19.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel19.setText("PRECIO:");
+        jLabel19.setText("NOMBRE:");
 
         btEXIT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -480,18 +484,6 @@ public class AltaSocio extends javax.swing.JFrame {
         btBACK.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btBACKMouseClicked(evt);
-            }
-        });
-
-        jcodigotarifa.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jcodigotarifa.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jcodigotarifaItemStateChanged(evt);
-            }
-        });
-        jcodigotarifa.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jcodigotarifaFocusGained(evt);
             }
         });
 
@@ -564,6 +556,45 @@ public class AltaSocio extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/altauser.png"))); // NOI18N
 
+        botontarifas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/busqueda16.png"))); // NOI18N
+        botontarifas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botontarifasActionPerformed(evt);
+            }
+        });
+        botontarifas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botontarifasKeyPressed(evt);
+            }
+        });
+
+        jLabel21.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel21.setText("PRECIO:");
+
+        jLabel23.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel23.setText("CÓDIGO:");
+
+        codetarifa.setEditable(false);
+        codetarifa.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        codetarifa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                codetarifaKeyTyped(evt);
+            }
+        });
+
+        nombretarifa.setEditable(false);
+        nombretarifa.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        nombretarifa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nombretarifaKeyTyped(evt);
+            }
+        });
+
+        codigo_tar.setForeground(new java.awt.Color(55, 64, 70));
+        codigo_tar.setText("jLabel22");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -591,7 +622,9 @@ public class AltaSocio extends javax.swing.JFrame {
                         .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addComponent(codigo_tar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btcargar, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -675,27 +708,34 @@ public class AltaSocio extends javax.swing.JFrame {
                                             .addComponent(jLabel9)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(jnumeroadherentes, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 7, Short.MAX_VALUE))
+                                .addGap(0, 13, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(102, 102, 102)
                                 .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(botontarifas)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel23)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(codetarifa)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jcodigotarifa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(16, 16, 16)
                                 .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nombretarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel21)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jcodigoobrasocial, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(149, 149, 149)))
+                                .addGap(25, 25, 25)))
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jzona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 554, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -745,7 +785,7 @@ public class AltaSocio extends javax.swing.JFrame {
                     .addComponent(jLabel12)
                     .addComponent(jtelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -758,27 +798,35 @@ public class AltaSocio extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19)
-                    .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15)
-                    .addComponent(jcodigoobrasocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14)
-                    .addComponent(jcodigotarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botontarifas)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel19)
+                        .addComponent(jprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel15)
+                        .addComponent(jcodigoobrasocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel21)
+                        .addComponent(jLabel23)
+                        .addComponent(codetarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nombretarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18)
-                    .addComponent(jedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel17)
-                    .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btcargar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel18)
+                            .addComponent(jedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel17)
+                            .addComponent(jfechaalta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jfechacobertura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btcargar))
+                    .addComponent(codigo_tar))
                 .addContainerGap())
         );
 
@@ -801,7 +849,7 @@ public class AltaSocio extends javax.swing.JFrame {
         if (!(jnombre.getText().isEmpty() || japellido.getText().isEmpty() || jdni.getText().isEmpty() || jtelefono.getText().isEmpty() ||
             jdireccion.getText().isEmpty() || jfechanac.getText().isEmpty() || jfechanac.getText().equals("dd/mm/aaaa") || jcodigoobrasocial.getText().isEmpty())){
             
-            if(jcodigotarifa.getSelectedItem()!="Seleccionar item"){
+            if(nombretarifa.getText().toString()!=""){
                 cargaDatos();
             }
             else{
@@ -824,31 +872,37 @@ public class AltaSocio extends javax.swing.JFrame {
     private void jplanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jplanItemStateChanged
         switch(this.jplan.getSelectedIndex()){
             case 0: 
+                cargarTarifas();
                 this.jnumeroadherentes.setText("0");
                 this.jnumeroadherentes.setEditable(false);
                 break;
             
             case 1:
+                cargarTarifas();
                 this.jnumeroadherentes.setText("1");
                 this.jnumeroadherentes.setEditable(false);                
                 break;
                 
             case 2:
+                cargarTarifas();
                 this.jnumeroadherentes.setText("2");
                 this.jnumeroadherentes.setEditable(true);             
                 break;
             
             case 3:
+                cargarTarifas();
                 this.jnumeroadherentes.setText("2");
                 this.jnumeroadherentes.setEditable(true);            
                 break;    
             
             case 4:
+                cargarTarifas();
                 this.jnumeroadherentes.setText("2");
                 this.jnumeroadherentes.setEditable(true);                
                 break;       
                 
             default: 
+                cargarTarifas();
                 this.jnumeroadherentes.setEditable(true);
                 this.jnumeroadherentes.setText("2");
         }
@@ -1059,10 +1113,6 @@ public class AltaSocio extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btEXITMouseClicked
-
-    private void jcodigotarifaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcodigotarifaItemStateChanged
-        setPrecio();
-    }//GEN-LAST:event_jcodigotarifaItemStateChanged
 
     private void jfechanacFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jfechanacFocusGained
         if (this.jfechanac.getText().equals("dd/mm/aaaa")){
@@ -1277,13 +1327,23 @@ public class AltaSocio extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btBACK1MouseClicked
 
-    private void jcodigotarifaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcodigotarifaFocusGained
-        cargarTarifas();
-    }//GEN-LAST:event_jcodigotarifaFocusGained
+    private void botontarifasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botontarifasActionPerformed
+        TarifasaSelec TAS = new TarifasaSelec(this.jplan.getSelectedIndex(), this.codetarifa, this.nombretarifa, this.jprecio, this.codigo_tar);
+    }//GEN-LAST:event_botontarifasActionPerformed
 
-    private void jplanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jplanFocusLost
-        cargarTarifas();
-    }//GEN-LAST:event_jplanFocusLost
+    private void codetarifaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codetarifaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_codetarifaKeyTyped
+
+    private void nombretarifaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombretarifaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombretarifaKeyTyped
+
+    private void botontarifasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botontarifasKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.botontarifas.doClick();
+        }
+    }//GEN-LAST:event_botontarifasKeyPressed
     
     private String añoDeCuatroDigitos(String añoDeDos){
         if(Integer.parseInt("20"+añoDeDos)>Calendar.getInstance().get(Calendar.YEAR)){
@@ -1293,9 +1353,6 @@ public class AltaSocio extends javax.swing.JFrame {
         }
     } 
     
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1330,6 +1387,7 @@ public class AltaSocio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botontarifas;
     private javax.swing.JLabel btBACK;
     private javax.swing.JLabel btBACK1;
     private javax.swing.JLabel btEXIT;
@@ -1337,6 +1395,8 @@ public class AltaSocio extends javax.swing.JFrame {
     private javax.swing.JLabel btMINIMIZAR;
     private javax.swing.JLabel btMINIMIZAR1;
     private javax.swing.JButton btcargar;
+    private javax.swing.JTextField codetarifa;
+    private javax.swing.JLabel codigo_tar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1350,6 +1410,8 @@ public class AltaSocio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1367,7 +1429,6 @@ public class AltaSocio extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTextField japellido;
     private javax.swing.JTextField jcodigoobrasocial;
-    private javax.swing.JComboBox<String> jcodigotarifa;
     private javax.swing.JTextField jdireccion;
     private javax.swing.JFormattedTextField jdni;
     private javax.swing.JTextField jedad;
@@ -1382,6 +1443,7 @@ public class AltaSocio extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jsexo;
     private javax.swing.JTextField jtelefono;
     private javax.swing.JComboBox<String> jzona;
+    private javax.swing.JTextField nombretarifa;
     // End of variables declaration//GEN-END:variables
 
     conectar cc = new conectar();

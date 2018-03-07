@@ -63,8 +63,8 @@ public class ConsultaSociosParaPago extends javax.swing.JFrame {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("N° SOCIO");
         modelo.addColumn("N° ZONA");
-        modelo.addColumn("APELLIDO");
         modelo.addColumn("NOMBRE");
+        modelo.addColumn("APELLIDO");
         modelo.addColumn("DNI");
         modelo.addColumn("LOCALIDAD");
         modelo.addColumn("PLAN");
@@ -80,8 +80,8 @@ public class ConsultaSociosParaPago extends javax.swing.JFrame {
             while(rs.next()){
                 datos[0] = rs.getString("nro_socio");
                 datos[1] = rs.getString("nro_zona");         
-                datos[2] = rs.getString("apellido");
-                datos[3] = rs.getString("nombre");
+                datos[2] = rs.getString("nombre");
+                datos[3] = rs.getString("apellido");
                 datos[4] = rs.getString("dni");
                 //datos[5] = rs.getString("direccion");
                 //datos[6] = rs.getString("telefono");
