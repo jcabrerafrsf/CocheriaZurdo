@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package zonas;
+package cobradores;
 
 import cocheriazurdo.conectar;
 import java.awt.Point;
@@ -12,57 +12,39 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import socio.ConsultaSocios;
 
 /**
  *
  * @author juani
  */
-public class EditarZona extends javax.swing.JFrame {
+public class EliminarCobrador extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CargarZona
-     */
     private Point clic;
-    
-    public EditarZona() {
+     
+    public EliminarCobrador() {
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage()); 
+        cargarCobradores();
     }
-    
-    public EditarZona(int zonaid){
-        initComponents();
-        this.setVisible(true);
-        this.setLocationRelativeTo(null);
-        setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage());
-        mostrarDatos(zonaid);
-    }
-    
-    private void mostrarDatos(Integer zonaid){
-        if (zonaid!=0){
-            this.jnombre.setEnabled(true);
-            this.jcobrador.setEnabled(true);
-            System.out.println(zonaid);
-            Statement st;
-            String[] datos = new String[2];
-            try {
-                st = cn.createStatement();
-                ResultSet rs = st.executeQuery("SELECT * FROM bdcocheriazurdo.zonas WHERE nro_zona="+zonaid);
-                while(rs.next()){
-                    datos[0] = rs.getString("nombre");
-                    datos[1] = rs.getString("cobrador");
-                }
-                this.jnrozona.setText(zonaid.toString());
-                this.jnombre.setText(datos[0]);
-                this.jcobrador.setSelectedItem(datos[1]);
-                st.close();
-            }catch(Exception e){
 
+    public void cargarCobradores(){
+        try{
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT nombre, apellido FROM bdcocheriazurdo.cobradores WHERE estado='ALTA'");
+            while(rs.next()){
+                this.jcobrador.addItem(rs.getString("nombre") + ", " + rs.getString("apellido"));
             }
-        }
+            st.close();
+        }catch (SQLException ex) {
+            Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
+        }        
     }
     
     @SuppressWarnings("unchecked")
@@ -76,22 +58,22 @@ public class EditarZona extends javax.swing.JFrame {
         btEXIT = new javax.swing.JLabel();
         btMINIMIZAR1 = new javax.swing.JLabel();
         btBACK = new javax.swing.JLabel();
-        jnrozona = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jnombre = new javax.swing.JTextField();
-        jSeparator2 = new javax.swing.JSeparator();
-        jLabel19 = new javax.swing.JLabel();
-        jcobrador = new javax.swing.JComboBox<>();
         jContinuar = new javax.swing.JButton();
         jCancelar = new javax.swing.JButton();
-        jSeparator3 = new javax.swing.JSeparator();
-        jSeparator4 = new javax.swing.JSeparator();
         jLabel20 = new javax.swing.JLabel();
-        consultar = new javax.swing.JButton();
+        jcobrador = new javax.swing.JComboBox<>();
+        jSeparator4 = new javax.swing.JSeparator();
+        jnrocobrador = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jdni = new javax.swing.JTextField();
+        jnombre = new javax.swing.JTextField();
+        japellido = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(55, 64, 70));
         jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2)));
@@ -108,9 +90,9 @@ public class EditarZona extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("EDITAR ZONA");
+        jLabel2.setText("ELIMINAR COBRADOR");
 
-        JL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/editar.png"))); // NOI18N
+        JL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/flecha-hacia-abajo.png"))); // NOI18N
 
         btEXIT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/close-circular-button-of-a-cross (1).png"))); // NOI18N
         btEXIT.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -133,51 +115,9 @@ public class EditarZona extends javax.swing.JFrame {
             }
         });
 
-        jnrozona.setEditable(false);
-        jnrozona.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-
-        jLabel17.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("N° DE ZONA:");
-
-        jLabel18.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("NOMBRE:");
-
-        jnombre.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jnombre.setEnabled(false);
-
-        jLabel19.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("COBRADOR:");
-
-        jcobrador.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jcobrador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cobrador 1", "Cobrador 2", "Cobrador 3" }));
-        jcobrador.setEnabled(false);
-        jcobrador.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jcobradorItemStateChanged(evt);
-            }
-        });
-        jcobrador.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jcobradorFocusLost(evt);
-            }
-        });
-        jcobrador.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-                jcobradorCaretPositionChanged(evt);
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-            }
-        });
-
         jContinuar.setBackground(new java.awt.Color(153, 255, 153));
         jContinuar.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jContinuar.setText("CONTINUAR");
+        jContinuar.setText("ELIMINAR");
         jContinuar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jContinuarActionPerformed(evt);
@@ -206,14 +146,64 @@ public class EditarZona extends javax.swing.JFrame {
         jLabel20.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("CONSULTAR ZONAS DISPONIBLES");
+        jLabel20.setText("COBRADOR:");
 
-        consultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/busqueda16.png"))); // NOI18N
-        consultar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                consultarActionPerformed(evt);
+        jcobrador.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jcobrador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        jcobrador.setToolTipText("");
+        jcobrador.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcobradorItemStateChanged(evt);
             }
         });
+        jcobrador.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jcobradorFocusLost(evt);
+            }
+        });
+        jcobrador.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+                jcobradorCaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+
+        jnrocobrador.setEditable(false);
+        jnrocobrador.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jnrocobrador.setEnabled(false);
+
+        jLabel21.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("N° DE COBRADOR:");
+
+        jLabel22.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel22.setText("DNI:");
+
+        jLabel23.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel23.setText("NOMBRE:");
+
+        jLabel24.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setText("APELLIDO:");
+
+        jdni.setEditable(false);
+        jdni.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jdni.setEnabled(false);
+
+        jnombre.setEditable(false);
+        jnombre.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jnombre.setEnabled(false);
+
+        japellido.setEditable(false);
+        japellido.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        japellido.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -222,15 +212,14 @@ public class EditarZona extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator3)
-                    .addComponent(jSeparator2)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(JL, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                                 .addComponent(btBACK)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btMINIMIZAR1)
@@ -238,28 +227,28 @@ public class EditarZona extends javax.swing.JFrame {
                                 .addComponent(btEXIT))
                             .addComponent(jSeparator1)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel19)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jcobrador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jSeparator4)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jdni, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jnrocobrador, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(japellido, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jContinuar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jnrozona, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jnombre))
-                    .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel20)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(consultar)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jContinuar)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -281,24 +270,28 @@ public class EditarZona extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(consultar))
-                .addGap(5, 5, 5)
-                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(jnrozona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18)
-                    .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19)
                     .addComponent(jcobrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jnrocobrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jdni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel23))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(japellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel24))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jContinuar)
                     .addComponent(jCancelar))
@@ -313,7 +306,9 @@ public class EditarZona extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -334,49 +329,27 @@ public class EditarZona extends javax.swing.JFrame {
     private void btBACKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btBACKMouseClicked
         int seleccion = JOptionPane.showConfirmDialog(null, "Realmente desea volver atrás?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(seleccion==0){
-            Zonas ZS = new Zonas();
+            Cobradores CB = new Cobradores();
             this.dispose();
         }else{
         }
     }//GEN-LAST:event_btBACKMouseClicked
 
-    private void jcobradorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcobradorItemStateChanged
-
-    }//GEN-LAST:event_jcobradorItemStateChanged
-
-    private void jcobradorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcobradorFocusLost
-
-    }//GEN-LAST:event_jcobradorFocusLost
-
-    private void jcobradorCaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jcobradorCaretPositionChanged
-
-    }//GEN-LAST:event_jcobradorCaretPositionChanged
-
     private void jContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jContinuarActionPerformed
-        if(jnrozona.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Hubo un problema al cargar el número de zona. Reintente"); 
+        if(jnrocobrador.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"No ha seleccionado una zona. Reintente");
         }else{
-            if(jnombre.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null,"Se debe especificar un nombre.");
-            }else{
-                int seleccion = JOptionPane.showConfirmDialog(null, "Realmente desea editar la zona?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(seleccion==0){
-
-                    try{
-                        PreparedStatement pst = cn.prepareStatement("UPDATE bdcocheriazurdo.zonas SET nombre='"+ jnombre.getText().toUpperCase() +"', cobrador='" + jcobrador.getSelectedItem().toString().toUpperCase() +"' WHERE nro_zona=" + Integer.valueOf(jnrozona.getText()) + ";");
-                        pst.executeUpdate();
-
-                        JOptionPane.showMessageDialog(null,"Zona modificada con éxito");
-
-                        Zonas z = new Zonas();
-                        this.dispose();
-
-                    }catch(NumberFormatException | SQLException e){
-                       System.out.println(e.getMessage());
-                    }
-
-                }else{
-                }
+            try{
+                PreparedStatement pst = cn.prepareStatement("UPDATE bdcocheriazurdo.cobradores SET estado='BAJA' WHERE nro_cobrador=?;");
+                pst.setString(1, jnrocobrador.getText());
+                pst.executeUpdate();
+                pst.close();
+                String selected = this.jcobrador.getSelectedItem().toString();
+                this.jcobrador.setSelectedIndex(0);
+                this.jcobrador.removeItem(selected);
+                JOptionPane.showMessageDialog(null, "La zona ha sido eliminada con éxito.");
+            }catch(Exception e){
+                e.printStackTrace();
             }
         }
     }//GEN-LAST:event_jContinuarActionPerformed
@@ -388,7 +361,7 @@ public class EditarZona extends javax.swing.JFrame {
     private void jCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelarActionPerformed
         int seleccion = JOptionPane.showConfirmDialog(null, "Realmente desea cancelar la operación?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(seleccion==0){
-            Zonas ZS = new Zonas();
+            Cobradores CB = new Cobradores();
             this.dispose();
         }else{
         }
@@ -398,10 +371,43 @@ public class EditarZona extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jCancelarKeyPressed
 
-    private void consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarActionPerformed
-        ConsTarParaEditar ce = new ConsTarParaEditar();
-        this.dispose();
-    }//GEN-LAST:event_consultarActionPerformed
+    private void jcobradorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcobradorItemStateChanged
+        if (!(this.jcobrador.getSelectedIndex()==0)){
+            Statement st;
+            String[] datos = new String[3];
+            try {
+                String str = "";
+                for (int i = 0; i<4; i++){
+                    if (this.jcobrador.getSelectedItem().toString().charAt(i)>=48 && this.jcobrador.getSelectedItem().toString().charAt(i)<=57)
+                    str = str + this.jcobrador.getSelectedItem().toString().charAt(i);
+                }
+                st = cn.createStatement();
+                ResultSet rs = st.executeQuery("SELECT * FROM bdcocheriazurdo.cobradores WHERE nro_zona="+str+";");
+                while(rs.next()){
+                    datos[0] = rs.getString("nombre");
+                    datos[1] = rs.getString("cobrador");
+                    datos[2] = rs.getString("recaudado");
+                }
+                this.jnombre.setText(datos[0]);
+                this.jnrocobrador.setText(datos[1]);
+                st.close();
+            }catch(Exception e){
+
+            }
+        }else{
+            this.jnrocobrador.setText(null);
+            this.jnombre.setText(null);
+            this.jnrocobrador.setText(null);
+        }
+    }//GEN-LAST:event_jcobradorItemStateChanged
+
+    private void jcobradorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcobradorFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcobradorFocusLost
+
+    private void jcobradorCaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jcobradorCaretPositionChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcobradorCaretPositionChanged
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
         // get location of Window
@@ -422,6 +428,9 @@ public class EditarZona extends javax.swing.JFrame {
         clic = evt.getPoint();
     }//GEN-LAST:event_jPanel1MousePressed
 
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -436,21 +445,20 @@ public class EditarZona extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditarZona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarCobrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditarZona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarCobrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditarZona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarCobrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditarZona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarCobrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditarZona().setVisible(true);
+                new EliminarCobrador().setVisible(true);
             }
         });
     }
@@ -460,22 +468,23 @@ public class EditarZona extends javax.swing.JFrame {
     private javax.swing.JLabel btBACK;
     private javax.swing.JLabel btEXIT;
     private javax.swing.JLabel btMINIMIZAR1;
-    private javax.swing.JButton consultar;
     private javax.swing.JButton jCancelar;
     private javax.swing.JButton jContinuar;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTextField japellido;
     private javax.swing.JComboBox<String> jcobrador;
+    private javax.swing.JTextField jdni;
     private javax.swing.JTextField jnombre;
-    private javax.swing.JTextField jnrozona;
+    private javax.swing.JTextField jnrocobrador;
     // End of variables declaration//GEN-END:variables
     conectar cc = new conectar();
     Connection cn = cc.ConexionMySql();

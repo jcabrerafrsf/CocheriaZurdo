@@ -13,6 +13,7 @@ import socio.OpcionesSocio;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import reportes.Comprobantes;
 import zonas.Zonas;
 
 /**
@@ -143,6 +144,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jLabel5.setText("TURNOS");
 
         btreporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/tareas.png"))); // NOI18N
+        btreporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btreporteActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -396,6 +402,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_jButton2KeyPressed
+
+    private void btreporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btreporteActionPerformed
+        Comprobantes CP = new Comprobantes();
+        this.dispose();
+    }//GEN-LAST:event_btreporteActionPerformed
 
     /**
      * @param args the command line arguments

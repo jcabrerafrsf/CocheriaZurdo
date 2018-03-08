@@ -4,7 +4,6 @@ package socio;
 import adherente.AltaAdherente;
 import cocheriazurdo.Fecha_Hora;
 import cocheriazurdo.conectar;
-import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.sql.*;
@@ -13,9 +12,7 @@ import java.util.Calendar;
 import javax.swing.JOptionPane;
 import java.util.Date;
 import java.util.logging.*;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import tarifa.ConsTarParaAltaSocio;
 
 public class AltaSocio extends javax.swing.JFrame {
 
@@ -29,7 +26,7 @@ public class AltaSocio extends javax.swing.JFrame {
         this.setVisible(true);
         setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage());
         setLocationRelativeTo(null);
-        cargarTarifas();
+        cargarZonas();
         this.jnumeroadherentes.setText("0");
     }
     
@@ -54,28 +51,41 @@ public class AltaSocio extends javax.swing.JFrame {
         
     }
     
-    public void cargarTarifas(){
+    public void cargarZonas(){
         
-
-            int plan = jplan.getSelectedIndex()+1;
-        
-            plan = 3;
-
-            String datos[] = new String [50];
-
-            try {
-                Statement st = cn.createStatement();
-                ResultSet rs = st.executeQuery("SELECT nombre FROM bdcocheriazurdo.tarifas WHERE estado='ALTA' AND plan="+plan);
-                //SE CARGA DOS VECES NO SE POR QUÉ
-                while(rs.next()){
-                    datos[0] = rs.getString("nombre");        
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
-
+        try{
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT nombre FROM bdcocheriazurdo.zonas WHERE estado='ALTA'");
+            while(rs.next()){
+                this.jzona.addItem(rs.getString("nombre"));      
+            }
+        }catch (SQLException ex) {
+            Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
+    
+//    public void cargarTarifas(){
+//        
+//
+//            int plan = jplan.getSelectedIndex()+1;
+//        
+//            plan = 3;
+//
+//            String datos[] = new String [50];
+//
+//            try {
+//                Statement st = cn.createStatement();
+//                ResultSet rs = st.executeQuery("SELECT nombre FROM bdcocheriazurdo.tarifas WHERE estado='ALTA' AND plan="+plan);
+//                //SE CARGA DOS VECES NO SE POR QUÉ
+//                while(rs.next()){
+//                    datos[0] = rs.getString("nombre");        
+//                }
+//            } catch (SQLException ex) {
+//                Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
+//
+//        }
+//
+//    }
     
     public void fechaSistema(){
         
@@ -123,7 +133,7 @@ public class AltaSocio extends javax.swing.JFrame {
             }
         nro_socio = cantsocios+1;
         pst.setInt(1,cantsocios+1);
-        pst.setInt(2, this.jzona.getSelectedIndex()+1);
+        pst.setInt(2, this.jzona.getSelectedIndex());
         pst.setString(3, this.jnombre.getText().toUpperCase());
         pst.setString(4, this.japellido.getText().toUpperCase());
         pst.setString(5, this.jdni.getText().toUpperCase());
@@ -307,7 +317,7 @@ public class AltaSocio extends javax.swing.JFrame {
         jLabel4.setText("ZONA:");
 
         jzona.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jzona.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 - OFICINA BOVRIL", "2 - BOVRIL 2", "3 - BOVRIL 3", "4 - BOVRIL 4", "5 - BOVRIL 5", "6 - ALCARAZ", "7 - SIR LEONARD", "8 - MOJONES", "9 - AVIGDOR", "10 - SAUCE DE LUNA", "11 - CONSCRIPTO BERNARDI", "12 - SOCIO NUEVO" }));
+        jzona.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una zona" }));
         jzona.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -733,7 +743,7 @@ public class AltaSocio extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jzona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -846,10 +856,10 @@ public class AltaSocio extends javax.swing.JFrame {
 
     private void btcargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btcargarActionPerformed
         
-        if (!(jnombre.getText().isEmpty() || japellido.getText().isEmpty() || jdni.getText().isEmpty() || jtelefono.getText().isEmpty() ||
+        if (!(jzona.getSelectedItem().toString()=="Seleccione una zona" || jnombre.getText().isEmpty() || japellido.getText().isEmpty() || jdni.getText().isEmpty() || jtelefono.getText().isEmpty() ||
             jdireccion.getText().isEmpty() || jfechanac.getText().isEmpty() || jfechanac.getText().equals("dd/mm/aaaa") || jcodigoobrasocial.getText().isEmpty())){
             
-            if(nombretarifa.getText().toString()!=""){
+            if(!nombretarifa.getText().isEmpty()){
                 cargaDatos();
             }
             else{
@@ -872,37 +882,31 @@ public class AltaSocio extends javax.swing.JFrame {
     private void jplanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jplanItemStateChanged
         switch(this.jplan.getSelectedIndex()){
             case 0: 
-                cargarTarifas();
                 this.jnumeroadherentes.setText("0");
                 this.jnumeroadherentes.setEditable(false);
                 break;
             
             case 1:
-                cargarTarifas();
                 this.jnumeroadherentes.setText("1");
                 this.jnumeroadherentes.setEditable(false);                
                 break;
                 
             case 2:
-                cargarTarifas();
                 this.jnumeroadherentes.setText("2");
                 this.jnumeroadherentes.setEditable(true);             
                 break;
             
             case 3:
-                cargarTarifas();
                 this.jnumeroadherentes.setText("2");
                 this.jnumeroadherentes.setEditable(true);            
                 break;    
             
             case 4:
-                cargarTarifas();
                 this.jnumeroadherentes.setText("2");
                 this.jnumeroadherentes.setEditable(true);                
                 break;       
                 
-            default: 
-                cargarTarifas();
+            default:
                 this.jnumeroadherentes.setEditable(true);
                 this.jnumeroadherentes.setText("2");
         }

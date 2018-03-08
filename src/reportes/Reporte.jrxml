@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f2a74c58-8aec-46fa-87c5-f841fb224187">
+	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.x" value="21"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT S.nro_socio, S.nombre, T.precio
+FROM socios S, tarifas T
+WHERE S.codigo_tarifa = T.nro_tarifa AND S.plan="INDIVIDUAL"]]>
+	</queryString>
+	<field name="nro_socio" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="a2cc3b72-1e61-48e8-8d7c-7f63062a5322"/>
+				<text><![CDATA[PLAN: INDIVIDUAL]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="141" splitType="Stretch">
+			<textField>
+				<reportElement x="59" y="71" width="66" height="20" uuid="e96f0e2a-1e18-4719-bf1a-304c0d8b9c36"/>
+				<textFieldExpression><![CDATA[$F{nro_socio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="71" width="33" height="20" uuid="ab863bd2-b125-414c-a27f-a764a7b2086a"/>
+				<text><![CDATA[Socio:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="125" height="37" uuid="675a80ad-b546-4ea6-a8ec-a229e1eca9f9"/>
+				<imageExpression><![CDATA["C:\\Users\\juani\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\top1.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="136" y="71" width="100" height="20" uuid="b5aed462-eef6-483c-9861-1f066d45de64"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="71" width="100" height="20" uuid="0b7aa33d-7d17-438c-9fcd-9cc414d0a5c8"/>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

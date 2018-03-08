@@ -64,8 +64,8 @@ public class CargarZona extends javax.swing.JFrame {
             String cobra = jcobrador.getSelectedItem().toString();
             
            pst.setInt(1, nro_zona);
-           pst.setString(2, jnombre.getText());
-           pst.setString(3, cobra);
+           pst.setString(2, jnombre.getText().toUpperCase());
+           pst.setString(3, cobra.toUpperCase());
            pst.setDouble(4, 0.00);
            pst.executeUpdate();
            
