@@ -288,13 +288,13 @@ public class Zonas extends javax.swing.JFrame {
     }//GEN-LAST:event_jConsultarKeyPressed
 
     private void jEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditarActionPerformed
-        EditarZona CZ = new EditarZona();
+        EditarCobrador CZ = new EditarCobrador();
         this.dispose();
     }//GEN-LAST:event_jEditarActionPerformed
 
     private void jEditarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jEditarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            EditarZona CZ = new EditarZona();
+            EditarCobrador CZ = new EditarCobrador();
             this.dispose();
         }
     }//GEN-LAST:event_jEditarKeyPressed

@@ -55,7 +55,7 @@ public class CargarCobrador extends javax.swing.JFrame {
         public void levantarNuevoCobrador(){
         
         try{
-            PreparedStatement pst = cn.prepareStatement("INSERT INTO bdcocheriazurdo.cobradores VALUES(?,?,?,?)");
+            PreparedStatement pst = cn.prepareStatement("INSERT INTO bdcocheriazurdo.cobradores VALUES(?,?,?,?,?)");
            
             int nro_cobrador = Integer.parseInt(jnrocobrador.getText());
             
@@ -63,6 +63,7 @@ public class CargarCobrador extends javax.swing.JFrame {
            pst.setInt(2, Integer.valueOf(jdni.getText()));
            pst.setString(3, jnombre.getText().toUpperCase());
            pst.setString(4, japellido.getText().toUpperCase());
+           pst.setString(5, "ALTA");
            
            pst.executeUpdate();
            
@@ -147,6 +148,7 @@ public class CargarCobrador extends javax.swing.JFrame {
 
         jnrocobrador.setEditable(false);
         jnrocobrador.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jnrocobrador.setEnabled(false);
 
         jLabel17.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));

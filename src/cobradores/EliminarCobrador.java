@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -25,6 +27,7 @@ import socio.ConsultaSocios;
 public class EliminarCobrador extends javax.swing.JFrame {
 
     private Point clic;
+    List<Integer> ids = new ArrayList();
      
     public EliminarCobrador() {
         initComponents();
@@ -37,9 +40,9 @@ public class EliminarCobrador extends javax.swing.JFrame {
     public void cargarCobradores(){
         try{
             Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT nombre, apellido FROM bdcocheriazurdo.cobradores WHERE estado='ALTA'");
+            ResultSet rs = st.executeQuery("SELECT nro_cobrador, nombre, apellido FROM bdcocheriazurdo.cobradores WHERE estado='ALTA'");
             while(rs.next()){
-                this.jcobrador.addItem(rs.getString("nombre") + ", " + rs.getString("apellido"));
+                this.jcobrador.addItem(rs.getString("nro_cobrador")+ " - " +rs.getString("apellido") + ", " + rs.getString("nombre"));
             }
             st.close();
         }catch (SQLException ex) {
@@ -74,6 +77,7 @@ public class EliminarCobrador extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(55, 64, 70));
         jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2)));
@@ -374,29 +378,33 @@ public class EliminarCobrador extends javax.swing.JFrame {
     private void jcobradorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcobradorItemStateChanged
         if (!(this.jcobrador.getSelectedIndex()==0)){
             Statement st;
-            String[] datos = new String[3];
+            String[] datos = new String[4];
             try {
+                st = cn.createStatement();
                 String str = "";
                 for (int i = 0; i<4; i++){
                     if (this.jcobrador.getSelectedItem().toString().charAt(i)>=48 && this.jcobrador.getSelectedItem().toString().charAt(i)<=57)
-                    str = str + this.jcobrador.getSelectedItem().toString().charAt(i);
+                        str = str + this.jcobrador.getSelectedItem().toString().charAt(i);
                 }
-                st = cn.createStatement();
-                ResultSet rs = st.executeQuery("SELECT * FROM bdcocheriazurdo.cobradores WHERE nro_zona="+str+";");
+                ResultSet rs = st.executeQuery("SELECT * FROM bdcocheriazurdo.cobradores WHERE nro_cobrador="+str+" AND estado='ALTA';");
                 while(rs.next()){
-                    datos[0] = rs.getString("nombre");
-                    datos[1] = rs.getString("cobrador");
-                    datos[2] = rs.getString("recaudado");
+                    datos[0] = rs.getString("dni");
+                    datos[1] = rs.getString("nombre");
+                    datos[2] = rs.getString("apellido");
+                    datos[3] = rs.getString("nro_cobrador");
                 }
-                this.jnombre.setText(datos[0]);
-                this.jnrocobrador.setText(datos[1]);
+                this.jdni.setText(datos[0]);
+                this.jnombre.setText(datos[1]);
+                this.japellido.setText(datos[2]);
+                this.jnrocobrador.setText(datos[3]);
                 st.close();
             }catch(Exception e){
 
             }
         }else{
-            this.jnrocobrador.setText(null);
+            this.jdni.setText(null);
             this.jnombre.setText(null);
+            this.japellido.setText(null);
             this.jnrocobrador.setText(null);
         }
     }//GEN-LAST:event_jcobradorItemStateChanged

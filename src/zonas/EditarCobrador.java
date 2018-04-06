@@ -19,21 +19,21 @@ import javax.swing.JOptionPane;
  *
  * @author juani
  */
-public class EditarZona extends javax.swing.JFrame {
+public class EditarCobrador extends javax.swing.JFrame {
 
     /**
      * Creates new form CargarZona
      */
     private Point clic;
     
-    public EditarZona() {
+    public EditarCobrador() {
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage()); 
     }
     
-    public EditarZona(int zonaid){
+    public EditarCobrador(int zonaid){
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -110,23 +110,23 @@ public class EditarZona extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("EDITAR ZONA");
 
-        JL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/editar.png"))); // NOI18N
+        JL.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\editar.png")); // NOI18N
 
-        btEXIT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/close-circular-button-of-a-cross (1).png"))); // NOI18N
+        btEXIT.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\close-circular-button-of-a-cross (1).png")); // NOI18N
         btEXIT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btEXITMouseClicked(evt);
             }
         });
 
-        btMINIMIZAR1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/minus-sign-in-a-circle (1).png"))); // NOI18N
+        btMINIMIZAR1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\minus-sign-in-a-circle (1).png")); // NOI18N
         btMINIMIZAR1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btMINIMIZAR1MouseClicked(evt);
             }
         });
 
-        btBACK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/back-arrow-circular-symbol (1).png"))); // NOI18N
+        btBACK.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\back-arrow-circular-symbol (1).png")); // NOI18N
         btBACK.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btBACKMouseClicked(evt);
@@ -208,7 +208,7 @@ public class EditarZona extends javax.swing.JFrame {
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("CONSULTAR ZONAS DISPONIBLES");
 
-        consultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/busqueda16.png"))); // NOI18N
+        consultar.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\busqueda16.png")); // NOI18N
         consultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 consultarActionPerformed(evt);
@@ -436,21 +436,23 @@ public class EditarZona extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditarZona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarCobrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditarZona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarCobrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditarZona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarCobrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditarZona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarCobrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditarZona().setVisible(true);
+                new EditarCobrador().setVisible(true);
             }
         });
     }

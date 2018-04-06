@@ -67,12 +67,8 @@ public class ConsultarZonas extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConsultarZonas.class.getName()).log(Level.SEVERE, null, ex);
         }        
-    }
-    
-    public JTable getTbzonas(){
-        return this.tbzonas;
     }
     
     @SuppressWarnings("unchecked")
