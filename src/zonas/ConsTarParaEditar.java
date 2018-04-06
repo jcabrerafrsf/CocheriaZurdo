@@ -238,7 +238,7 @@ public class ConsTarParaEditar extends javax.swing.JFrame {
     }//GEN-LAST:event_btBACKMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        EditarCobrador ez = new EditarCobrador (this.tbzonas.getSelectedRow()+1);
+        EditarZona ez = new EditarZona (this.tbzonas.getSelectedRow()+1);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
