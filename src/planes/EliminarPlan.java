@@ -90,21 +90,21 @@ public class EliminarPlan extends javax.swing.JFrame {
 
         JL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/flecha-hacia-abajo.png"))); // NOI18N
 
-        btEXIT.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\close-circular-button-of-a-cross (1).png")); // NOI18N
+        btEXIT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/close-circular-button-of-a-cross (1).png"))); // NOI18N
         btEXIT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btEXITMouseClicked(evt);
             }
         });
 
-        btMINIMIZAR1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\minus-sign-in-a-circle (1).png")); // NOI18N
+        btMINIMIZAR1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/minus-sign-in-a-circle (1).png"))); // NOI18N
         btMINIMIZAR1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btMINIMIZAR1MouseClicked(evt);
             }
         });
 
-        btBACK.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fausto\\Documents\\NetBeansProjects\\CocheriaZurdo\\src\\recursos\\back-arrow-circular-symbol (1).png")); // NOI18N
+        btBACK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/back-arrow-circular-symbol (1).png"))); // NOI18N
         btBACK.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btBACKMouseClicked(evt);

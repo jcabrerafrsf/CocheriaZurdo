@@ -162,7 +162,7 @@
         <Component class="javax.swing.JLabel" name="btEXIT">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Fausto\Documents\NetBeansProjects\CocheriaZurdo\src\recursos\close-circular-button-of-a-cross (1).png"/>
+              <Image iconType="3" name="/recursos/close-circular-button-of-a-cross (1).png"/>
             </Property>
           </Properties>
           <Events>
@@ -172,7 +172,7 @@
         <Component class="javax.swing.JLabel" name="btMINIMIZAR1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Fausto\Documents\NetBeansProjects\CocheriaZurdo\src\recursos\minus-sign-in-a-circle (1).png"/>
+              <Image iconType="3" name="/recursos/minus-sign-in-a-circle (1).png"/>
             </Property>
           </Properties>
           <Events>
@@ -182,7 +182,7 @@
         <Component class="javax.swing.JLabel" name="btBACK">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Fausto\Documents\NetBeansProjects\CocheriaZurdo\src\recursos\back-arrow-circular-symbol (1).png"/>
+              <Image iconType="3" name="/recursos/back-arrow-circular-symbol (1).png"/>
             </Property>
           </Properties>
           <Events>
