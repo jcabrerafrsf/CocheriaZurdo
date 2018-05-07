@@ -111,6 +111,7 @@ public class CargarTarifa extends javax.swing.JFrame {
            this.dispose();
            
         }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,ex.getMessage()); 
             Logger.getLogger(ConsultaSocios.class.getName()).log(Level.SEVERE, null, ex);
         }
         

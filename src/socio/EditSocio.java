@@ -138,16 +138,9 @@ public class EditSocio extends javax.swing.JFrame {
         }
     }
     
-    public String getPlan(){
+    public int getPlan(){
         int varplan = this.jplan.getSelectedIndex();
-        switch (varplan){
-            case 0: return "INDIVIDUAL";
-            case 1: return "TITULAR Y ADHERENTE";
-            case 2: return "FAMILIAR";
-            case 3: return"FAMILIAR CON IOSPER";
-            case 4: return "JUBILADOS";
-            default: return "NO ESPECIFICADO";
-        }
+        return varplan+1;
     }
     
     
@@ -169,21 +162,21 @@ public class EditSocio extends javax.swing.JFrame {
         pst.setString(7, this.jtelefono.getText().toUpperCase());
         pst.setString(8, getSexo());
         pst.setString(9, getLocalidad());
-        pst.setString(10, getPlan());
+        pst.setInt(10, getPlan());
         pst.setString(11, this.jcodigotarifa.getText().toUpperCase());        
         pst.setString(12, this.jcodigoobrasocial.getText().toUpperCase());
         pst.setString(13, this.jfechanac.getText().toUpperCase());
         //NO ACTUALIZO LA FECHA DE ALTA NI COBERTURA POR QUE ES ILÓGICO
         //pst.setString(14, this.jfechaalta.getText().toUpperCase());
         //pst.setString(15, this.jfechacobertura.getText().toUpperCase());
-        pst.setString(14, this.jedad.getText().toUpperCase());
+        //pst.setString(14, this.jedad.getText().toUpperCase());
         pst.setString(15, this.jnumeroadherentes.getText().toUpperCase());
 
         pst.executeUpdate();
         pst.close();
         
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error en la conexion - "+e.getMessage());
+            JOptionPane.showMessageDialog(null,"Error en la conexión - "+e.getMessage());
         }
        
     }
@@ -248,8 +241,6 @@ public class EditSocio extends javax.swing.JFrame {
                 japellido.setText(datos[3]);
                 jdni.setText(datos[4]);
                 
-                System.out.println("EL SEXO ES: "+datos[7]);
-                                
                 if(datos[7]=="MASCULINO"){
                    jsexo.setSelectedIndex(0);
                 }
@@ -261,10 +252,6 @@ public class EditSocio extends javax.swing.JFrame {
                         jsexo.setSelectedIndex(2);
                     }
                 }
-                
-                System.out.println("EL SEXO ES: "+getSexo());
-                
-                
                 
                 jfechanac.setText(datos[12]);
                 jdireccion.setText(datos[5]);

@@ -134,14 +134,14 @@ public class AltaSocio extends javax.swing.JFrame {
         nro_socio = cantsocios+1;
         pst.setInt(1,cantsocios+1);
         pst.setInt(2, this.jzona.getSelectedIndex());
-        pst.setString(3, this.jnombre.getText().toUpperCase());
-        pst.setString(4, this.japellido.getText().toUpperCase());
+        pst.setString(3, this.japellido.getText().toUpperCase());
+        pst.setString(4, this.jnombre.getText().toUpperCase());
         pst.setString(5, this.jdni.getText().toUpperCase());
         pst.setString(6, this.jdireccion.getText().toUpperCase());
         pst.setString(7, this.jtelefono.getText().toUpperCase());
         pst.setString(8, getSexo());
-        pst.setString(9, getLocalidad());
-        pst.setString(10, getPlan());
+        pst.setInt(9, getLocalidad());
+        pst.setInt(10, getPlan());
         pst.setInt(11, Integer.valueOf(this.codigo_tar.getText()));
         pst.setString(12, this.jcodigoobrasocial.getText().toUpperCase());
         pst.setString(13, this.jfechanac.getText().toUpperCase());
@@ -202,31 +202,14 @@ public class AltaSocio extends javax.swing.JFrame {
         }       
     }
     
-    public String getLocalidad(){
+    public int getLocalidad(){
         int varlocalidad = this.jlocalidad.getSelectedIndex();
-        switch (varlocalidad){
-            case 0: return "BOVRIL";
-            case 1: return "SAUCE DE LUNA";
-            case 2: return "ALCARAZ";
-            case 3: return "COLONIA AVIGDOR";
-            case 4: return "MOJONES NORTE";
-            case 5: return "MOJONES SUR";
-            case 6: return "CONSCRIPTO BERNARDI";
-            case 7: return "SIR LEONARD";
-            default: return "NO ESPECIFICADO";
-        }
+        return varlocalidad+1;
     }
     
-    public String getPlan(){
+    public int getPlan(){
         int varplan = this.jplan.getSelectedIndex();
-        switch (varplan){
-            case 0: return "INDIVIDUAL";
-            case 1: return "TITULAR Y ADHERENTE";
-            case 2: return "FAMILIAR";
-            case 3: return"FAMILIAR CON IOSPER";
-            case 4: return "JUBILADOS";
-            default: return "NO ESPECIFICADO";
-        }
+        return varplan+1;
     }
     
     @SuppressWarnings("unchecked")
@@ -678,14 +661,14 @@ public class AltaSocio extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
                                         .addComponent(jLabel6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(japellido, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(23, 23, 23)
                                         .addComponent(jLabel7)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jdni, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -696,7 +679,7 @@ public class AltaSocio extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addComponent(jLabel8)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGap(18, 18, 18)
                                             .addComponent(jfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(12, 12, 12)
                                             .addComponent(jLabel11)
@@ -718,7 +701,7 @@ public class AltaSocio extends javax.swing.JFrame {
                                             .addComponent(jLabel9)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(jnumeroadherentes, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 13, Short.MAX_VALUE))
+                                .addGap(0, 8, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel14)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -778,13 +761,13 @@ public class AltaSocio extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
                     .addComponent(japellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(jdni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jsexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jsexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -856,7 +839,7 @@ public class AltaSocio extends javax.swing.JFrame {
 
     private void btcargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btcargarActionPerformed
         
-        if (!(jzona.getSelectedItem().toString()=="Seleccione una zona" || jnombre.getText().isEmpty() || japellido.getText().isEmpty() || jdni.getText().isEmpty() || jtelefono.getText().isEmpty() ||
+        if (!(jzona.getSelectedItem().toString()=="Seleccione una zona" || jnombre.getText().isEmpty() || japellido.getText().isEmpty() || jdni.getText().isEmpty() ||
             jdireccion.getText().isEmpty() || jfechanac.getText().isEmpty() || jfechanac.getText().equals("dd/mm/aaaa") || jcodigoobrasocial.getText().isEmpty())){
             
             if(!nombretarifa.getText().isEmpty()){

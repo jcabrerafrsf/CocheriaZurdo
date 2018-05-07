@@ -64,8 +64,8 @@ public class ConsultaSociosParaEditar extends javax.swing.JFrame {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("N° SOCIO");
         modelo.addColumn("N° ZONA");
-        modelo.addColumn("NOMBRE");
         modelo.addColumn("APELLIDO");
+        modelo.addColumn("NOMBRE");        
         modelo.addColumn("DNI");
         modelo.addColumn("LOCALIDAD");
         modelo.addColumn("PLAN");
