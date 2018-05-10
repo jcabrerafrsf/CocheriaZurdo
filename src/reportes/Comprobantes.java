@@ -117,7 +117,7 @@ public class Comprobantes extends javax.swing.JFrame {
             if(edad>=11 && edad<=20){
                 try {
                     PreparedStatement pst; 
-                    pst = cn.prepareStatement("UPDATE bdcocheriazurdo.socios SET pago='"+precios[1]+"' WHERE nro_socio='"+nro_socio+"';");
+                    pst = cn.prepareStatement("UPDATE bdcocheriazurdo.socios SET pago='"+precios[1]+"', saldo=(bdcocheriazurdo.socios.saldo+"+ precios[1] +") WHERE nro_socio='"+nro_socio+"';");
                     pst.executeUpdate();
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null,ex.getMessage()+"- Problema para actualizar el pago");
@@ -130,10 +130,10 @@ public class Comprobantes extends javax.swing.JFrame {
                     
                     try {
                         PreparedStatement pst; 
-                        pst = cn.prepareStatement("UPDATE bdcocheriazurdo.socios SET pago='"+precios[2]+"' WHERE nro_socio='"+nro_socio+"';");
+                        pst = cn.prepareStatement("UPDATE bdcocheriazurdo.socios SET pago='"+precios[2]+"', saldo=(bdcocheriazurdo.socios.saldo+"+ precios[2] +") WHERE nro_socio='"+nro_socio+"';");
                         pst.executeUpdate();
                         
-                         System.out.println("UPDATE PAGO");
+                        System.out.println("UPDATE PAGO");
                         
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(null,ex.getMessage()+"- Problema para actualizar el pago");
@@ -143,7 +143,7 @@ public class Comprobantes extends javax.swing.JFrame {
                     if(edad>=31 && edad<=40){
                         try {
                             PreparedStatement pst; 
-                            pst = cn.prepareStatement("UPDATE bdcocheriazurdo.socios SET pago='"+precios[3]+"' WHERE nro_socio='"+nro_socio+"';");
+                            pst = cn.prepareStatement("UPDATE bdcocheriazurdo.socios SET pago='"+precios[3]+"', saldo=(bdcocheriazurdo.socios.saldo+"+ precios[3] +") WHERE nro_socio='"+nro_socio+"';");
                             pst.executeUpdate();
                         } catch (SQLException ex) {
                             JOptionPane.showMessageDialog(null,ex.getMessage()+"- Problema para actualizar el pago");
@@ -153,7 +153,7 @@ public class Comprobantes extends javax.swing.JFrame {
                         if(edad>=41 && edad<=50){
                             try {
                                 PreparedStatement pst; 
-                                pst = cn.prepareStatement("UPDATE bdcocheriazurdo.socios SET pago='"+precios[4]+"' WHERE nro_socio='"+nro_socio+"';");
+                                pst = cn.prepareStatement("UPDATE bdcocheriazurdo.socios SET pago='"+precios[4]+"', saldo=(bdcocheriazurdo.socios.saldo+"+ precios[4] +") WHERE nro_socio='"+nro_socio+"';");
                                 pst.executeUpdate();
                             } catch (SQLException ex) {
                                 JOptionPane.showMessageDialog(null,ex.getMessage()+"- Problema para actualizar el pago");
@@ -163,7 +163,7 @@ public class Comprobantes extends javax.swing.JFrame {
                             if(edad>=51 && edad<=60){
                                 try {
                                     PreparedStatement pst; 
-                                    pst = cn.prepareStatement("UPDATE bdcocheriazurdo.socios SET pago='"+precios[5]+"' WHERE nro_socio='"+nro_socio+"';");
+                                    pst = cn.prepareStatement("UPDATE bdcocheriazurdo.socios SET pago='"+precios[5]+"', saldo=(bdcocheriazurdo.socios.saldo+"+ precios[5] +") WHERE nro_socio='"+nro_socio+"';");
                                     pst.executeUpdate();
                                 } catch (SQLException ex) {
                                     JOptionPane.showMessageDialog(null,ex.getMessage()+"- Problema para actualizar el pago");
@@ -171,16 +171,44 @@ public class Comprobantes extends javax.swing.JFrame {
                                 }
                             }else{
                                 if(edad>=61 && edad<=70){
-                
+                                    try {
+                                        PreparedStatement pst; 
+                                        pst = cn.prepareStatement("UPDATE bdcocheriazurdo.socios SET pago='"+precios[6]+"', saldo=(bdcocheriazurdo.socios.saldo+"+ precios[6] +") WHERE nro_socio='"+nro_socio+"';");
+                                        pst.executeUpdate();
+                                    } catch (SQLException ex) {
+                                        JOptionPane.showMessageDialog(null,ex.getMessage()+"- Problema para actualizar el pago");
+                                        Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
                                 }else{
                                     if(edad>=71 && edad<=80){
-                
+                                        try {
+                                            PreparedStatement pst; 
+                                            pst = cn.prepareStatement("UPDATE bdcocheriazurdo.socios SET pago='"+precios[7]+"', saldo=(bdcocheriazurdo.socios.saldo+"+ precios[7] +") WHERE nro_socio='"+nro_socio+"';");
+                                            pst.executeUpdate();
+                                        } catch (SQLException ex) {
+                                            JOptionPane.showMessageDialog(null,ex.getMessage()+"- Problema para actualizar el pago");
+                                            Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
                                     }else{
                                         if(edad>=81 && edad<=90){
-                
+                                            try {
+                                                PreparedStatement pst; 
+                                                pst = cn.prepareStatement("UPDATE bdcocheriazurdo.socios SET pago='"+precios[8]+"', saldo=(bdcocheriazurdo.socios.saldo+"+ precios[8] +") WHERE nro_socio='"+nro_socio+"';");
+                                                pst.executeUpdate();
+                                            } catch (SQLException ex) {
+                                                JOptionPane.showMessageDialog(null,ex.getMessage()+"- Problema para actualizar el pago");
+                                                Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
                                         }else{
                                             if(edad>=91 && edad<=100){
-                
+                                                try {
+                                                    PreparedStatement pst; 
+                                                    pst = cn.prepareStatement("UPDATE bdcocheriazurdo.socios SET pago='"+precios[9]+"', saldo=(bdcocheriazurdo.socios.saldo+"+ precios[9] +") WHERE nro_socio='"+nro_socio+"';");
+                                                    pst.executeUpdate();
+                                                } catch (SQLException ex) {
+                                                    JOptionPane.showMessageDialog(null,ex.getMessage()+"- Problema para actualizar el pago");
+                                                    Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+                                                }
                                             }else{
                                                 //seteo un precio >100
                                             }
