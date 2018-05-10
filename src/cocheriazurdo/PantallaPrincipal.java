@@ -430,8 +430,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2KeyPressed
 
     private void btreporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btreporteActionPerformed
-        Comprobantes CP = new Comprobantes();
-        this.dispose();
+        //Comprobantes CP = new Comprobantes();
+        //this.dispose();
     }//GEN-LAST:event_btreporteActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

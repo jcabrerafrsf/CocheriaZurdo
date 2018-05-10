@@ -42,6 +42,7 @@ public class TarifasaSelec extends javax.swing.JFrame {
         this.setVisible(true);
         setIconImage(new ImageIcon(getClass().getResource("/recursos/logocz.png")).getImage());
         setLocationRelativeTo(null);
+        jnrotarifa.requestFocus();
         label_code = code;
         label_nombre = nombre;
         txtfield_precio = precio;
